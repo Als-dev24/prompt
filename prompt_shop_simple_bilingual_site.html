@@ -1,0 +1,1865 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PromptMaster - Votre source de prompts IA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6c63ff;
+            --secondary: #ff6584;
+            --dark: #2a2a2a;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --success: #28a745;
+            --warning: #ffc107;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            color: var(--dark);
+            line-height: 1.6;
+            background-color: #fff;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+        }
+        
+        .btn:hover {
+            background: #5a52d5;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .btn-secondary {
+            background: var(--secondary);
+        }
+        
+        .btn-secondary:hover {
+            background: #e05574;
+        }
+        
+        .btn-success {
+            background: var(--success);
+        }
+        
+        .btn-success:hover {
+            background: #218838;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* Header */
+        header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 30px;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .lang-switcher {
+            display: flex;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .lang-btn {
+            padding: 8px 15px;
+            background: white;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .lang-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .cart-icon {
+            position: relative;
+            font-size: 1.5rem;
+            color: var(--dark);
+            cursor: pointer;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--secondary);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #f5f7ff 0%, #e6e9ff 100%);
+            padding: 150px 0 100px;
+            text-align: center;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--gray);
+            margin-bottom: 30px;
+        }
+        
+        /* Products Section */
+        .products {
+            background: white;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .product-image {
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary) 0%, #8a85ff 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+        
+        .product-content {
+            padding: 25px;
+        }
+        
+        .product-content h3 {
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .product-content p {
+            color: var(--gray);
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+        
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .product-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-bottom: 15px;
+        }
+        
+        /* Cart Modal */
+        .cart-modal {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 100%;
+            max-width: 400px;
+            height: 100%;
+            background: white;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            z-index: 2000;
+            transition: right 0.3s ease;
+            overflow-y: auto;
+        }
+        
+        .cart-modal.active {
+            right: 0;
+        }
+        
+        .cart-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .cart-header h3 {
+            margin: 0;
+        }
+        
+        .close-cart {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+        }
+        
+        .cart-items {
+            padding: 20px;
+        }
+        
+        .cart-item {
+            display: flex;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .cart-item-image {
+            width: 80px;
+            height: 80px;
+            background: var(--primary);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            margin-right: 15px;
+        }
+        
+        .cart-item-details {
+            flex: 1;
+        }
+        
+        .cart-item-details h4 {
+            margin-bottom: 5px;
+        }
+        
+        .cart-item-price {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .cart-item-quantity {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+        
+        .quantity-btn {
+            width: 30px;
+            height: 30px;
+            background: #f0f0f0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .quantity-input {
+            width: 40px;
+            height: 30px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin: 0 5px;
+        }
+        
+        .remove-item {
+            background: none;
+            border: none;
+            color: var(--secondary);
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+        
+        .cart-total {
+            padding: 20px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .cart-actions {
+            padding: 0 20px 20px;
+        }
+        
+        .cart-actions .btn {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1500;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* Checkout Section */
+        .checkout {
+            background: #f8f9fa;
+            display: none;
+        }
+        
+        .checkout-steps {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+        
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 20px;
+        }
+        
+        .step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .step.active .step-number {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .step.completed .step-number {
+            background: var(--success);
+            color: white;
+        }
+        
+        .step-label {
+            font-size: 0.9rem;
+        }
+        
+        .checkout-form {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            max-width: 600px;
+            margin: 0 auto;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        .payment-methods {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .payment-method {
+            flex: 1;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .payment-method.active {
+            border-color: var(--primary);
+            background: #f5f7ff;
+        }
+        
+        .payment-method i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .delivery-options {
+            display: none;
+            margin-top: 20px;
+        }
+        
+        .delivery-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        
+        .delivery-option.active {
+            border-color: var(--primary);
+            background: #f5f7ff;
+        }
+        
+        .delivery-option input {
+            margin-right: 10px;
+        }
+        
+        /* Thank You Section */
+        .thank-you {
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary) 0%, #8a85ff 100%);
+            color: white;
+            padding: 100px 0;
+            display: none;
+        }
+        
+        .thank-you h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .thank-you p {
+            max-width: 600px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+        }
+        
+        /* About Section */
+        .about {
+            background: white;
+            display: none;
+        }
+        
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-image {
+            flex: 1;
+            height: 400px;
+            background: linear-gradient(135deg, var(--primary) 0%, #8a85ff 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 5rem;
+        }
+        
+        /* Contact Section */
+        .contact {
+            background: #f8f9fa;
+            display: none;
+        }
+        
+        .contact-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+        
+        .contact-info {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .contact-info h3 {
+            margin-bottom: 20px;
+        }
+        
+        .contact-item {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        
+        .contact-item i {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-right: 15px;
+        }
+        
+        .contact-form {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 0 30px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--primary);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: white;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            nav ul {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: white;
+                flex-direction: column;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+                padding: 20px 0;
+            }
+            
+            nav ul.show {
+                display: flex;
+            }
+            
+            nav ul li {
+                margin: 0;
+                text-align: center;
+                padding: 10px 0;
+            }
+            
+            .mobile-menu {
+                display: block;
+            }
+            
+            .cart-modal {
+                max-width: 100%;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .about-image {
+                width: 100%;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="#" class="logo" data-lang-key="logo"><i class="fas fa-robot"></i>Prompt<span>Master</span></a>
+            
+            <div class="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="#" class="nav-link active" data-section="home" data-lang-key="home">Accueil</a></li>
+                    <li><a href="#" class="nav-link" data-section="about" data-lang-key="about">À propos</a></li>
+                    <li><a href="#" class="nav-link" data-section="contact" data-lang-key="contact">Contact</a></li>
+                </ul>
+            </nav>
+            
+            <div class="header-actions">
+                <div class="lang-switcher">
+                    <button class="lang-btn active" data-lang="fr">FR</button>
+                    <button class="lang-btn" data-lang="en">EN</button>
+                </div>
+                <div class="cart-icon" id="cartIcon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1 data-lang-key="heroTitle">Prompts IA de qualité professionnelle</h1>
+                <p data-lang-key="heroSubtitle">Découvrez notre collection exclusive de prompts optimisés pour maximiser les performances de ChatGPT et autres modèles d'IA.</p>
+                <a href="#products" class="btn" data-lang-key="explorePrompts">Explorer les Prompts</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products" id="products">
+        <div class="container">
+            <div class="section-title">
+                <h2 data-lang-key="ourPrompts">Nos Prompts</h2>
+                <p data-lang-key="promptsDescription">Choisissez parmi nos 6 catégories de prompts spécialement conçus pour différents usages.</p>
+            </div>
+            <div class="products-grid" id="productsGrid">
+                <!-- Products will be loaded by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2 data-lang-key="aboutUs">À propos de nous</h2>
+                <p data-lang-key="aboutDescription">Découvrez l'équipe derrière PromptMaster</p>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3 data-lang-key="ourStory">Notre histoire</h3>
+                    <p data-lang-key="aboutText1">PromptMaster est né de la passion pour l'intelligence artificielle et son potentiel transformateur. Fondé en 2023, notre objectif est de rendre l'IA accessible à tous en fournissant des outils de qualité.</p>
+                    <p data-lang-key="aboutText2">Notre équipe d'experts en IA travaille sans relâche pour créer des prompts optimisés qui permettent à nos clients d'obtenir les meilleurs résultats de ChatGPT et autres modèles de langage.</p>
+                    <p data-lang-key="aboutText3">Nous croyons en l'innovation continue et mettons régulièrement à jour notre collection pour suivre l'évolution rapide des technologies d'IA.</p>
+                </div>
+                <div class="about-image">
+                    <i class="fas fa-users"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2 data-lang-key="contactUs">Contactez-nous</h2>
+                <p data-lang-key="contactDescription">N'hésitez pas à nous contacter pour toute question</p>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3 data-lang-key="getInTouch">Restons en contact</h3>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h4 data-lang-key="address">Adresse</h4>
+                            <p data-lang-key="addressValue">123 Rue de l'IA, Paris, France</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h4 data-lang-key="phone">Téléphone</h4>
+                            <p>+33 1 23 45 67 89</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4 data-lang-key="email">Email</h4>
+                            <p>contact@promptmaster.com</p>
+                        </div>
+                    </div>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <h3 data-lang-key="sendMessage">Envoyer un message</h3>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name" data-lang-key="name">Nom</label>
+                            <input type="text" id="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" data-lang-key="email">Email</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject" data-lang-key="subject">Sujet</label>
+                            <input type="text" id="subject" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message" data-lang-key="message">Message</label>
+                            <textarea id="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn" data-lang-key="sendMessage">Envoyer le message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Modal -->
+    <div class="overlay" id="overlay"></div>
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-header">
+            <h3 data-lang-key="yourCart">Votre Panier</h3>
+            <button class="close-cart" id="closeCart"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <!-- Cart items will be loaded by JavaScript -->
+        </div>
+        <div class="cart-total">
+            <span data-lang-key="total">Total:</span>
+            <span id="cartTotal">0 USDT</span>
+        </div>
+        <div class="cart-actions">
+            <button class="btn btn-success" id="checkoutBtn" data-lang-key="proceedCheckout">Procéder au paiement</button>
+            <button class="btn btn-outline" id="continueShopping" data-lang-key="continueShopping">Continuer les achats</button>
+        </div>
+    </div>
+
+    <!-- Checkout Section -->
+    <section class="checkout" id="checkout">
+        <div class="container">
+            <div class="checkout-steps">
+                <div class="step active" id="step1">
+                    <div class="step-number">1</div>
+                    <div class="step-label" data-lang-key="information">Informations</div>
+                </div>
+                <div class="step" id="step2">
+                    <div class="step-number">2</div>
+                    <div class="step-label" data-lang-key="payment">Paiement</div>
+                </div>
+                <div class="step" id="step3">
+                    <div class="step-number">3</div>
+                    <div class="step-label" data-lang-key="delivery">Livraison</div>
+                </div>
+            </div>
+            
+            <div class="checkout-form">
+                <form id="checkoutForm">
+                    <!-- Step 1: Information -->
+                    <div id="checkoutStep1">
+                        <h3 data-lang-key="personalInfo">Informations personnelles</h3>
+                        <div class="form-group">
+                            <label for="fullName" data-lang-key="fullName">Nom complet</label>
+                            <input type="text" id="fullName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="checkoutEmail" data-lang-key="email">Email</label>
+                            <input type="email" id="checkoutEmail" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="phone" data-lang-key="phone">Téléphone</label>
+                                <input type="tel" id="phone" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="country" data-lang-key="country">Pays</label>
+                                <select id="country" required>
+                                    <option value="" data-lang-key="selectCountry">Sélectionnez un pays</option>
+                                    <option value="france" data-lang-key="france">France</option>
+                                    <option value="canada" data-lang-key="canada">Canada</option>
+                                    <option value="belgium" data-lang-key="belgium">Belgique</option>
+                                    <option value="switzerland" data-lang-key="switzerland">Suisse</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="button" class="btn" id="nextToPayment" data-lang-key="next">Suivant</button>
+                    </div>
+                    
+                    <!-- Step 2: Payment -->
+                    <div id="checkoutStep2" style="display: none;">
+                        <h3 data-lang-key="paymentMethod">Méthode de paiement</h3>
+                        <div class="payment-methods">
+                            <div class="payment-method active" data-method="coinbase">
+                                <i class="fab fa-bitcoin"></i>
+                                <h4>Coinbase Commerce</h4>
+                                <p data-lang-key="payWithCrypto">Payer avec crypto</p>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label data-lang-key="paymentDetails">Détails du paiement</label>
+                            <p data-lang-key="paymentDescription">Vous serez redirigé vers Coinbase Commerce pour finaliser votre paiement en cryptomonnaie.</p>
+                        </div>
+                        
+                        <div class="form-row">
+                            <button type="button" class="btn btn-outline" id="backToInfo" data-lang-key="back">Retour</button>
+                            <button type="button" class="btn" id="nextToDelivery" data-lang-key="next">Suivant</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 3: Delivery -->
+                    <div id="checkoutStep3" style="display: none;">
+                        <h3 data-lang-key="deliveryMethod">Méthode de livraison</h3>
+                        <p data-lang-key="deliveryDescription">Choisissez comment vous souhaitez recevoir vos prompts.</p>
+                        
+                        <div class="delivery-options">
+                            <div class="delivery-option active">
+                                <input type="radio" id="download" name="delivery" value="download" checked>
+                                <label for="download">
+                                    <strong data-lang-key="directDownload">Téléchargement direct</strong><br>
+                                    <span data-lang-key="downloadDescription">Téléchargez immédiatement le fichier PDF après paiement</span>
+                                </label>
+                            </div>
+                            <div class="delivery-option">
+                                <input type="radio" id="email" name="delivery" value="email">
+                                <label for="email">
+                                    <strong data-lang-key="emailDelivery">Livraison par email</strong><br>
+                                    <span data-lang-key="emailDescription">Recevez le PDF par email après confirmation du paiement</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <button type="button" class="btn btn-outline" id="backToPayment" data-lang-key="back">Retour</button>
+                            <button type="submit" class="btn btn-success" data-lang-key="completeOrder">Finaliser la commande</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Thank You Section -->
+    <section class="thank-you" id="thankYou">
+        <div class="container">
+            <i class="fas fa-check-circle" style="font-size: 5rem; margin-bottom: 20px;"></i>
+            <h2 data-lang-key="thankYou">Merci pour votre achat !</h2>
+            <p data-lang-key="orderConfirmed">Votre commande a été confirmée. Vous recevrez bientôt vos prompts.</p>
+            
+            <div id="downloadOption" style="display: none;">
+                <p data-lang-key="downloadReady">Votre fichier est prêt au téléchargement.</p>
+                <a href="#" class="btn btn-success" id="downloadBtn"><i class="fas fa-download"></i> <span data-lang-key="downloadNow">Télécharger maintenant</span></a>
+            </div>
+            
+            <div id="emailOption" style="display: none;">
+                <p data-lang-key="emailSent">Un email avec votre fichier PDF a été envoyé à votre adresse email.</p>
+            </div>
+            
+            <a href="#home" class="btn btn-outline" style="margin-top: 20px; color: white; border-color: white;" data-lang-key="backToHome">Retour à l'accueil</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3 data-lang-key="promptMaster">PromptMaster</h3>
+                    <p data-lang-key="footerDescription">Votre source de prompts IA de qualité pour maximiser votre productivité.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3 data-lang-key="quickLinks">Liens rapides</h3>
+                    <ul>
+                        <li><a href="#home" data-lang-key="home">Accueil</a></li>
+                        <li><a href="#products" data-lang-key="products">Produits</a></li>
+                        <li><a href="#about" data-lang-key="about">À propos</a></li>
+                        <li><a href="#contact" data-lang-key="contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3 data-lang-key="categories">Catégories</h3>
+                    <ul id="footerCategories">
+                        <!-- Categories will be loaded by JavaScript -->
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3 data-lang-key="contactInfo">Contact</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> contact@promptmaster.com</li>
+                        <li><i class="fas fa-phone"></i> +33 1 23 45 67 89</li>
+                        <li><i class="fas fa-map-marker-alt"></i> <span data-lang-key="addressValue">123 Rue de l'IA, Paris, France</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 PromptMaster. <span data-lang-key="allRightsReserved">Tous droits réservés</span>.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ==================== CONFIGURATION ====================
+        
+        // Products data
+        const products = [
+            {
+                id: 1,
+                name: "Prompts Créatifs",
+                nameEn: "Creative Prompts",
+                description: "Collection de prompts pour stimuler la créativité et générer des idées innovantes.",
+                descriptionEn: "Collection of prompts to stimulate creativity and generate innovative ideas.",
+                price: 9.99,
+                icon: "fas fa-paint-brush",
+                category: "creativite",
+                categoryEn: "creativity"
+            },
+            {
+                id: 2,
+                name: "Prompts Professionnels",
+                nameEn: "Professional Prompts",
+                description: "Prompts optimisés pour les besoins professionnels et le monde de l'entreprise.",
+                descriptionEn: "Prompts optimized for professional needs and the business world.",
+                price: 12.99,
+                icon: "fas fa-briefcase",
+                category: "business",
+                categoryEn: "business"
+            },
+            {
+                id: 3,
+                name: "Prompts Académiques",
+                nameEn: "Academic Prompts",
+                description: "Prompts spécialisés pour la recherche, la rédaction et les travaux universitaires.",
+                descriptionEn: "Specialized prompts for research, writing and academic work.",
+                price: 14.99,
+                icon: "fas fa-graduation-cap",
+                category: "education",
+                categoryEn: "education"
+            },
+            {
+                id: 4,
+                name: "Prompts Marketing",
+                nameEn: "Marketing Prompts",
+                description: "Prompts pour créer du contenu marketing percutant et des stratégies efficaces.",
+                descriptionEn: "Prompts to create compelling marketing content and effective strategies.",
+                price: 11.99,
+                icon: "fas fa-chart-line",
+                category: "marketing",
+                categoryEn: "marketing"
+            },
+            {
+                id: 5,
+                name: "Prompts Techniques",
+                nameEn: "Technical Prompts",
+                description: "Prompts pour développeurs, ingénieurs et professionnels techniques.",
+                descriptionEn: "Prompts for developers, engineers and technical professionals.",
+                price: 13.99,
+                icon: "fas fa-code",
+                category: "technique",
+                categoryEn: "technical"
+            },
+            {
+                id: 6,
+                name: "Prompts Bien-être",
+                nameEn: "Wellness Prompts",
+                description: "Prompts pour la méditation, la réflexion personnelle et le développement personnel.",
+                descriptionEn: "Prompts for meditation, personal reflection and self-development.",
+                price: 8.99,
+                icon: "fas fa-heart",
+                category: "bienetre",
+                categoryEn: "wellness"
+            }
+        ];
+
+        // Language data
+        const translations = {
+            fr: {
+                // Navigation
+                "logo": "PromptMaster",
+                "home": "Accueil",
+                "about": "À propos",
+                "contact": "Contact",
+                "products": "Produits",
+                
+                // Hero section
+                "heroTitle": "Prompts IA de qualité professionnelle",
+                "heroSubtitle": "Découvrez notre collection exclusive de prompts optimisés pour maximiser les performances de ChatGPT et autres modèles d'IA.",
+                "explorePrompts": "Explorer les Prompts",
+                
+                // Products section
+                "ourPrompts": "Nos Prompts",
+                "promptsDescription": "Choisissez parmi nos 6 catégories de prompts spécialement conçus pour différents usages.",
+                "addToCart": "Ajouter au panier",
+                "usdt": "USDT",
+                
+                // Cart
+                "yourCart": "Votre Panier",
+                "total": "Total:",
+                "proceedCheckout": "Procéder au paiement",
+                "continueShopping": "Continuer les achats",
+                "remove": "Supprimer",
+                
+                // Checkout
+                "information": "Informations",
+                "payment": "Paiement",
+                "delivery": "Livraison",
+                "personalInfo": "Informations personnelles",
+                "fullName": "Nom complet",
+                "email": "Email",
+                "phone": "Téléphone",
+                "country": "Pays",
+                "selectCountry": "Sélectionnez un pays",
+                "france": "France",
+                "canada": "Canada",
+                "belgium": "Belgique",
+                "switzerland": "Suisse",
+                "next": "Suivant",
+                "back": "Retour",
+                "paymentMethod": "Méthode de paiement",
+                "payWithCrypto": "Payer avec crypto",
+                "paymentDetails": "Détails du paiement",
+                "paymentDescription": "Vous serez redirigé vers Coinbase Commerce pour finaliser votre paiement en cryptomonnaie.",
+                "deliveryMethod": "Méthode de livraison",
+                "deliveryDescription": "Choisissez comment vous souhaitez recevoir vos prompts.",
+                "directDownload": "Téléchargement direct",
+                "downloadDescription": "Téléchargez immédiatement le fichier PDF après paiement",
+                "emailDelivery": "Livraison par email",
+                "emailDescription": "Recevez le PDF par email après confirmation du paiement",
+                "completeOrder": "Finaliser la commande",
+                
+                // Thank you section
+                "thankYou": "Merci pour votre achat !",
+                "orderConfirmed": "Votre commande a été confirmée. Vous recevrez bientôt vos prompts.",
+                "downloadReady": "Votre fichier est prêt au téléchargement.",
+                "downloadNow": "Télécharger maintenant",
+                "emailSent": "Un email avec votre fichier PDF a été envoyé à votre adresse email.",
+                "backToHome": "Retour à l'accueil",
+                
+                // About section
+                "aboutUs": "À propos de nous",
+                "aboutDescription": "Découvrez l'équipe derrière PromptMaster",
+                "ourStory": "Notre histoire",
+                "aboutText1": "PromptMaster est né de la passion pour l'intelligence artificielle et son potentiel transformateur. Fondé en 2023, notre objectif est de rendre l'IA accessible à tous en fournissant des outils de qualité.",
+                "aboutText2": "Notre équipe d'experts en IA travaille sans relâche pour créer des prompts optimisés qui permettent à nos clients d'obtenir les meilleurs résultats de ChatGPT et autres modèles de langage.",
+                "aboutText3": "Nous croyons en l'innovation continue et mettons régulièrement à jour notre collection pour suivre l'évolution rapide des technologies d'IA.",
+                
+                // Contact section
+                "contactUs": "Contactez-nous",
+                "contactDescription": "N'hésitez pas à nous contacter pour toute question",
+                "getInTouch": "Restons en contact",
+                "address": "Adresse",
+                "addressValue": "123 Rue de l'IA, Paris, France",
+                "sendMessage": "Envoyer un message",
+                "name": "Nom",
+                "subject": "Sujet",
+                "message": "Message",
+                
+                // Footer
+                "promptMaster": "PromptMaster",
+                "footerDescription": "Votre source de prompts IA de qualité pour maximiser votre productivité.",
+                "quickLinks": "Liens rapides",
+                "categories": "Catégories",
+                "contactInfo": "Contact",
+                "allRightsReserved": "Tous droits réservés"
+            },
+            en: {
+                // Navigation
+                "logo": "PromptMaster",
+                "home": "Home",
+                "about": "About",
+                "contact": "Contact",
+                "products": "Products",
+                
+                // Hero section
+                "heroTitle": "Professional Quality AI Prompts",
+                "heroSubtitle": "Discover our exclusive collection of optimized prompts to maximize ChatGPT and other AI models performance.",
+                "explorePrompts": "Explore Prompts",
+                
+                // Products section
+                "ourPrompts": "Our Prompts",
+                "promptsDescription": "Choose from our 6 categories of prompts specially designed for different uses.",
+                "addToCart": "Add to cart",
+                "usdt": "USDT",
+                
+                // Cart
+                "yourCart": "Your Cart",
+                "total": "Total:",
+                "proceedCheckout": "Proceed to checkout",
+                "continueShopping": "Continue shopping",
+                "remove": "Remove",
+                
+                // Checkout
+                "information": "Information",
+                "payment": "Payment",
+                "delivery": "Delivery",
+                "personalInfo": "Personal information",
+                "fullName": "Full name",
+                "email": "Email",
+                "phone": "Phone",
+                "country": "Country",
+                "selectCountry": "Select a country",
+                "france": "France",
+                "canada": "Canada",
+                "belgium": "Belgium",
+                "switzerland": "Switzerland",
+                "next": "Next",
+                "back": "Back",
+                "paymentMethod": "Payment method",
+                "payWithCrypto": "Pay with crypto",
+                "paymentDetails": "Payment details",
+                "paymentDescription": "You will be redirected to Coinbase Commerce to complete your cryptocurrency payment.",
+                "deliveryMethod": "Delivery method",
+                "deliveryDescription": "Choose how you want to receive your prompts.",
+                "directDownload": "Direct download",
+                "downloadDescription": "Download the PDF file immediately after payment",
+                "emailDelivery": "Email delivery",
+                "emailDescription": "Receive the PDF by email after payment confirmation",
+                "completeOrder": "Complete order",
+                
+                // Thank you section
+                "thankYou": "Thank you for your purchase!",
+                "orderConfirmed": "Your order has been confirmed. You will receive your prompts shortly.",
+                "downloadReady": "Your file is ready for download.",
+                "downloadNow": "Download now",
+                "emailSent": "An email with your PDF file has been sent to your email address.",
+                "backToHome": "Back to home",
+                
+                // About section
+                "aboutUs": "About us",
+                "aboutDescription": "Discover the team behind PromptMaster",
+                "ourStory": "Our story",
+                "aboutText1": "PromptMaster was born from a passion for artificial intelligence and its transformative potential. Founded in 2023, our goal is to make AI accessible to everyone by providing quality tools.",
+                "aboutText2": "Our team of AI experts works tirelessly to create optimized prompts that allow our clients to get the best results from ChatGPT and other language models.",
+                "aboutText3": "We believe in continuous innovation and regularly update our collection to keep up with the rapid evolution of AI technologies.",
+                
+                // Contact section
+                "contactUs": "Contact us",
+                "contactDescription": "Feel free to contact us with any questions",
+                "getInTouch": "Get in touch",
+                "address": "Address",
+                "addressValue": "123 AI Street, Paris, France",
+                "sendMessage": "Send message",
+                "name": "Name",
+                "subject": "Subject",
+                "message": "Message",
+                
+                // Footer
+                "promptMaster": "PromptMaster",
+                "footerDescription": "Your source of quality AI prompts to maximize your productivity.",
+                "quickLinks": "Quick links",
+                "categories": "Categories",
+                "contactInfo": "Contact",
+                "allRightsReserved": "All rights reserved"
+            }
+        };
+
+        // ==================== GLOBAL VARIABLES ====================
+        
+        let cart = [];
+        let currentLanguage = 'fr';
+        let currentSection = 'home';
+
+        // ==================== DOM ELEMENTS ====================
+        
+        const cartIcon = document.getElementById('cartIcon');
+        const cartModal = document.getElementById('cartModal');
+        const overlay = document.getElementById('overlay');
+        const closeCart = document.getElementById('closeCart');
+        const cartItems = document.getElementById('cartItems');
+        const cartTotal = document.getElementById('cartTotal');
+        const cartCount = document.querySelector('.cart-count');
+        const checkoutBtn = document.getElementById('checkoutBtn');
+        const continueShopping = document.getElementById('continueShopping');
+        const productsGrid = document.getElementById('productsGrid');
+        const footerCategories = document.getElementById('footerCategories');
+        const langButtons = document.querySelectorAll('.lang-btn');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = {
+            home: document.getElementById('home'),
+            products: document.getElementById('products'),
+            about: document.getElementById('about'),
+            contact: document.getElementById('contact'),
+            checkout: document.getElementById('checkout'),
+            thankYou: document.getElementById('thankYou')
+        };
+
+        // Checkout elements
+        const checkoutStep1 = document.getElementById('checkoutStep1');
+        const checkoutStep2 = document.getElementById('checkoutStep2');
+        const checkoutStep3 = document.getElementById('checkoutStep3');
+        const nextToPayment = document.getElementById('nextToPayment');
+        const backToInfo = document.getElementById('backToInfo');
+        const nextToDelivery = document.getElementById('nextToDelivery');
+        const backToPayment = document.getElementById('backToPayment');
+        const checkoutForm = document.getElementById('checkoutForm');
+        const deliveryOptions = document.querySelectorAll('.delivery-option');
+        const downloadOption = document.getElementById('downloadOption');
+        const emailOption = document.getElementById('emailOption');
+        const downloadBtn = document.getElementById('downloadBtn');
+
+        // ==================== INITIALIZATION ====================
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load products
+            renderProducts();
+            renderFooterCategories();
+            
+            // Load cart from localStorage
+            loadCartFromStorage();
+            updateCartUI();
+            
+            // Set up event listeners
+            setupEventListeners();
+            
+            // Set initial language
+            setLanguage(currentLanguage);
+        });
+
+        // ==================== PRODUCTS RENDERING ====================
+        
+        function renderProducts() {
+            productsGrid.innerHTML = '';
+            
+            products.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.innerHTML = `
+                    <div class="product-image">
+                        <i class="${product.icon}"></i>
+                    </div>
+                    <div class="product-content">
+                        <h3 data-lang-key="product${product.id}Name">${currentLanguage === 'fr' ? product.name : product.nameEn}</h3>
+                        <p data-lang-key="product${product.id}Desc">${currentLanguage === 'fr' ? product.description : product.descriptionEn}</p>
+                        <div class="product-meta">
+                            <span data-lang-key="category">Catégorie</span>
+                            <span data-lang-key="category${product.id}">${currentLanguage === 'fr' ? product.category : product.categoryEn}</span>
+                        </div>
+                        <div class="product-price">${product.price} <span data-lang-key="usdt">USDT</span></div>
+                        <button class="btn btn-secondary add-to-cart" data-id="${product.id}" data-lang-key="addToCart">Ajouter au panier</button>
+                    </div>
+                `;
+                productsGrid.appendChild(productCard);
+            });
+            
+            // Add event listeners to add to cart buttons
+            document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.addEventListener('click', function() {
+                    const productId = parseInt(this.getAttribute('data-id'));
+                    addToCart(productId);
+                });
+            });
+            
+            // Update translations for product names and descriptions
+            updateTranslations();
+        }
+        
+        function renderFooterCategories() {
+            footerCategories.innerHTML = '';
+            
+            const categories = [...new Set(products.map(p => currentLanguage === 'fr' ? p.category : p.categoryEn))];
+            
+            categories.forEach(category => {
+                const li = document.createElement('li');
+                li.innerHTML = `<a href="#products">${category}</a>`;
+                footerCategories.appendChild(li);
+            });
+        }
+
+        // ==================== CART FUNCTIONALITY ====================
+        
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    ...product,
+                    quantity: 1
+                });
+            }
+            
+            // Animation feedback
+            const addButton = document.querySelector(`.add-to-cart[data-id="${productId}"]`);
+            const originalText = addButton.textContent;
+            addButton.textContent = currentLanguage === 'fr' ? 'Ajouté !' : 'Added!';
+            addButton.style.background = "var(--success)";
+            
+            setTimeout(() => {
+                addButton.textContent = originalText;
+                addButton.style.background = "";
+            }, 1500);
+            
+            updateCartUI();
+            saveCartToStorage();
+        }
+        
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCartUI();
+            saveCartToStorage();
+        }
+        
+        function updateCartUI() {
+            // Update cart items
+            cartItems.innerHTML = '';
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = `<p style="text-align: center;" data-lang-key="emptyCart">Votre panier est vide</p>`;
+            } else {
+                cart.forEach(item => {
+                    const cartItem = document.createElement('div');
+                    cartItem.className = 'cart-item';
+                    cartItem.innerHTML = `
+                        <div class="cart-item-image">
+                            <i class="${item.icon}"></i>
+                        </div>
+                        <div class="cart-item-details">
+                            <h4>${currentLanguage === 'fr' ? item.name : item.nameEn}</h4>
+                            <div class="cart-item-price">${item.price} USDT</div>
+                            <div class="cart-item-quantity">
+                                <button class="quantity-btn decrease-quantity" data-id="${item.id}">-</button>
+                                <input type="text" class="quantity-input" value="${item.quantity}" readonly>
+                                <button class="quantity-btn increase-quantity" data-id="${item.id}">+</button>
+                            </div>
+                            <button class="remove-item" data-id="${item.id}" data-lang-key="remove">Supprimer</button>
+                        </div>
+                    `;
+                    cartItems.appendChild(cartItem);
+                });
+            }
+            
+            // Update total
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            cartTotal.textContent = `${total.toFixed(2)} USDT`;
+            
+            // Update count
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            
+            // Add event listeners to cart items
+            document.querySelectorAll('.remove-item').forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = parseInt(this.getAttribute('data-id'));
+                    removeFromCart(id);
+                });
+            });
+            
+            document.querySelectorAll('.decrease-quantity').forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = parseInt(this.getAttribute('data-id'));
+                    const item = cart.find(item => item.id === id);
+                    if (item.quantity > 1) {
+                        item.quantity -= 1;
+                    } else {
+                        removeFromCart(id);
+                    }
+                    updateCartUI();
+                    saveCartToStorage();
+                });
+            });
+            
+            document.querySelectorAll('.increase-quantity').forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = parseInt(this.getAttribute('data-id'));
+                    const item = cart.find(item => item.id === id);
+                    item.quantity += 1;
+                    updateCartUI();
+                    saveCartToStorage();
+                });
+            });
+            
+            // Update translations
+            updateTranslations();
+        }
+        
+        function saveCartToStorage() {
+            localStorage.setItem('promptMasterCart', JSON.stringify(cart));
+        }
+        
+        function loadCartFromStorage() {
+            const savedCart = localStorage.getItem('promptMasterCart');
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+            }
+        }
+
+        // ==================== CHECKOUT PROCESS ====================
+        
+        function setupCheckoutProcess() {
+            // Step 1 to Step 2
+            nextToPayment.addEventListener('click', function() {
+                // Validate step 1
+                const fullName = document.getElementById('fullName').value;
+                const email = document.getElementById('checkoutEmail').value;
+                const phone = document.getElementById('phone').value;
+                const country = document.getElementById('country').value;
+                
+                if (!fullName || !email || !phone || !country) {
+                    alert(currentLanguage === 'fr' ? 'Veuillez remplir tous les champs obligatoires.' : 'Please fill in all required fields.');
+                    return;
+                }
+                
+                checkoutStep1.style.display = 'none';
+                checkoutStep2.style.display = 'block';
+                document.getElementById('step1').classList.remove('active');
+                document.getElementById('step1').classList.add('completed');
+                document.getElementById('step2').classList.add('active');
+            });
+            
+            // Step 2 back to Step 1
+            backToInfo.addEventListener('click', function() {
+                checkoutStep2.style.display = 'none';
+                checkoutStep1.style.display = 'block';
+                document.getElementById('step2').classList.remove('active');
+                document.getElementById('step1').classList.add('active');
+                document.getElementById('step1').classList.remove('completed');
+            });
+            
+            // Step 2 to Step 3
+            nextToDelivery.addEventListener('click', function() {
+                checkoutStep2.style.display = 'none';
+                checkoutStep3.style.display = 'block';
+                document.querySelector('.delivery-options').style.display = 'block';
+                document.getElementById('step2').classList.remove('active');
+                document.getElementById('step2').classList.add('completed');
+                document.getElementById('step3').classList.add('active');
+            });
+            
+            // Step 3 back to Step 2
+            backToPayment.addEventListener('click', function() {
+                checkoutStep3.style.display = 'none';
+                checkoutStep2.style.display = 'block';
+                document.getElementById('step3').classList.remove('active');
+                document.getElementById('step2').classList.add('active');
+                document.getElementById('step2').classList.remove('completed');
+            });
+            
+            // Delivery options selection
+            deliveryOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    deliveryOptions.forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                    const radio = this.querySelector('input[type="radio"]');
+                    radio.checked = true;
+                });
+            });
+            
+            // Form submission
+            checkoutForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Simulate payment processing
+                const paymentMethod = document.querySelector('.payment-method.active').getAttribute('data-method');
+                const deliveryMethod = document.querySelector('input[name="delivery"]:checked').value;
+                
+                // In a real implementation, you would integrate with Coinbase Commerce API here
+                // For this demo, we'll simulate a successful payment
+                
+                // Hide checkout section, show thank you section
+                sections.checkout.style.display = 'none';
+                sections.thankYou.style.display = 'block';
+                
+                // Show appropriate delivery option
+                if (deliveryMethod === 'download') {
+                    downloadOption.style.display = 'block';
+                    emailOption.style.display = 'none';
+                } else {
+                    downloadOption.style.display = 'none';
+                    emailOption.style.display = 'block';
+                }
+                
+                // Clear cart
+                cart = [];
+                updateCartUI();
+                saveCartToStorage();
+                
+                // Scroll to thank you section
+                sections.thankYou.scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            // Download button
+            downloadBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                // In a real implementation, this would download the actual PDF
+                alert(currentLanguage === 'fr' ? 'Téléchargement du PDF commencé!' : 'PDF download started!');
+            });
+        }
+
+        // ==================== LANGUAGE SWITCHING ====================
+        
+        function setLanguage(lang) {
+            currentLanguage = lang;
+            
+            // Update active language button
+            langButtons.forEach(btn => {
+                if (btn.getAttribute('data-lang') === lang) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            
+            // Update all text elements with data-lang-key attribute
+            updateTranslations();
+            
+            // Re-render products to update names and descriptions
+            renderProducts();
+        }
+        
+        function updateTranslations() {
+            document.querySelectorAll('[data-lang-key]').forEach(element => {
+                const key = element.getAttribute('data-lang-key');
+                if (translations[currentLanguage] && translations[currentLanguage][key]) {
+                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                        element.placeholder = translations[currentLanguage][key];
+                    } else {
+                        element.textContent = translations[currentLanguage][key];
+                    }
+                }
+            });
+        }
+
+        // ==================== NAVIGATION ====================
+        
+        function showSection(sectionId) {
+            // Hide all sections
+            Object.values(sections).forEach(section => {
+                if (section) section.style.display = 'none';
+            });
+            
+            // Show selected section
+            if (sections[sectionId]) {
+                sections[sectionId].style.display = 'block';
+                
+                // Special cases
+                if (sectionId === 'home') {
+                    sections.products.style.display = 'block';
+                }
+            }
+            
+            // Update active nav link
+            navLinks.forEach(link => {
+                if (link.getAttribute('data-section') === sectionId) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+            
+            currentSection = sectionId;
+            
+            // Scroll to top of section
+            if (sectionId !== 'home') {
+                window.scrollTo(0, 0);
+            }
+        }
+
+        // ==================== EVENT LISTENERS ====================
+        
+        function setupEventListeners() {
+            // Cart functionality
+            cartIcon.addEventListener('click', openCart);
+            closeCart.addEventListener('click', closeCartModal);
+            overlay.addEventListener('click', closeCartModal);
+            continueShopping.addEventListener('click', closeCartModal);
+            
+            // Checkout button
+            checkoutBtn.addEventListener('click', function() {
+                if (cart.length === 0) {
+                    alert(currentLanguage === 'fr' ? 'Votre panier est vide!' : 'Your cart is empty!');
+                    return;
+                }
+                
+                closeCartModal();
+                showSection('checkout');
+                setupCheckoutProcess();
+            });
+            
+            // Language switcher
+            langButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    setLanguage(lang);
+                });
+            });
+            
+            // Navigation
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const section = this.getAttribute('data-section');
+                    showSection(section);
+                });
+            });
+            
+            // Mobile menu
+            document.querySelector('.mobile-menu').addEventListener('click', function() {
+                document.querySelector('nav ul').classList.toggle('show');
+            });
+            
+            // Contact form
+            document.getElementById('contactForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert(currentLanguage === 'fr' ? 'Message envoyé avec succès!' : 'Message sent successfully!');
+                this.reset();
+            });
+            
+            // Back to home from thank you page
+            document.querySelector('a[href="#home"]').addEventListener('click', function(e) {
+                e.preventDefault();
+                showSection('home');
+                window.scrollTo(0, 0);
+            });
+        }
+        
+        function openCart() {
+            cartModal.classList.add('active');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeCartModal() {
+            cartModal.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+    </script>
+</body>
+</html>
