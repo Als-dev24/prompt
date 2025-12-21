@@ -1,0 +1,10 @@
+# Allow all crawlers
+User-agent: *
+Allow: /
+
+# Block admin and API routes
+Disallow: /api/
+Disallow: /admin/
+
+# Sitemap location
+Sitemap: https://promptdeal.store/sitemap.xml
