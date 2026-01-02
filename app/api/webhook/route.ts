@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server"
 import crypto from "crypto"
+import { createAdminClient } from "@/lib/supabase/admin"
 
 interface ChargeData {
   id: string
@@ -16,6 +17,8 @@ interface ChargeData {
   metadata?: {
     promptId?: string
     items?: string
+    email?: string
+    packType?: string
   }
   timeline: Array<{
     status: string
@@ -143,22 +146,41 @@ export async function POST(request: NextRequest) {
       const { id: chargeId, metadata, pricing, name } = event.data
       const promptId = metadata?.promptId
       const itemsData = metadata?.items ? JSON.parse(metadata.items) : null
+      const email = metadata?.email || "unknown@example.com"
+      const packType = metadata?.packType || "cart"
 
       console.log("[v0] Payment confirmed:", {
         chargeId,
-        promptId,
+        email,
+        packType,
         amount: pricing.local.amount,
-        currency: pricing.local.currency,
       })
+
+      const supabase = createAdminClient()
+
+      const { error: insertError } = await supabase.from("orders").insert([
+        {
+          email,
+          charge_id: chargeId,
+          pack_type: packType,
+          amount: Number.parseFloat(pricing.local.amount),
+          payment_status: "paid",
+          download_status: false,
+        },
+      ])
+
+      if (insertError) {
+        console.error("[v0] Error inserting order:", insertError)
+        // Continue anyway, order might already exist
+      } else {
+        console.log("[v0] Order inserted successfully")
+      }
 
       // Generate download link
       const downloadUrl = `${new URL(request.url).origin}/api/download/${chargeId}`
 
-      // TODO: Get actual customer email from your database
-      const customerEmail = "customer@example.com" // Replace with real email from order
-
       // Send confirmation email
-      await sendConfirmationEmail(promptId || "cart", downloadUrl, customerEmail, itemsData)
+      await sendConfirmationEmail(promptId || "cart", downloadUrl, email, itemsData)
 
       return NextResponse.json({
         received: true,
@@ -170,10 +192,13 @@ export async function POST(request: NextRequest) {
 
     if (event.type === "charge:failed") {
       const { id: chargeId, metadata } = event.data
+      const email = metadata?.email || "unknown@example.com"
 
-      console.log("[v0] Payment failed:", { chargeId })
+      console.log("[v0] Payment failed:", { chargeId, email })
 
-      // TODO: Update order status in database and notify customer
+      const supabase = createAdminClient()
+
+      await supabase.from("orders").update({ payment_status: "failed" }).eq("charge_id", chargeId)
 
       return NextResponse.json({
         received: true,
@@ -186,6 +211,21 @@ export async function POST(request: NextRequest) {
       const { id: chargeId } = event.data
 
       console.log("[v0] Payment pending:", { chargeId })
+
+      const supabase = createAdminClient()
+      const email = event.data.metadata?.email || "unknown@example.com"
+      const packType = event.data.metadata?.packType || "cart"
+
+      await supabase.from("orders").insert([
+        {
+          email,
+          charge_id: chargeId,
+          pack_type: packType,
+          amount: Number.parseFloat(event.data.pricing.local.amount),
+          payment_status: "pending",
+          download_status: false,
+        },
+      ])
 
       return NextResponse.json({
         received: true,

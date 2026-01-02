@@ -14,14 +14,14 @@ You have the following API keys ready:
 
 ### Push to GitHub
 
-```bash
+\`\`\`bash
 git init
 git add .
 git commit -m "Initial commit: PromptDeal marketplace"
 git branch -M main
 git remote add origin https://github.com/YOUR_USERNAME/promptdeal.git
 git push -u origin main
-```
+\`\`\`
 
 ### Deploy on Vercel
 
@@ -63,9 +63,10 @@ Your site needs to receive payment confirmations from Coinbase:
 3. Navigate to **Settings** → **Webhook subscriptions**
 4. Click **Add an endpoint**
 5. Enter your webhook URL:
-   ```
-   https://your-site-name.vercel.app/api/webhook
-   ```
+   \`\`\`
+   https://promptdeal.store/api/webhook
+   \`\`\`
+   <!-- Replaced placeholder domain with promptdeal.store -->
    (Replace `your-site-name` with your actual Vercel domain)
 
 6. Select these events:
@@ -88,9 +89,9 @@ For professional emails from your own domain:
 5. Verify domain
 
 Once verified, update the webhook code to use:
-```typescript
+\`\`\`typescript
 from: "PromptDeal <orders@your-domain.com>"
-```
+\`\`\`
 
 For now, emails will come from `onboarding@resend.dev` (works fine for testing).
 
@@ -134,16 +135,16 @@ After payment confirmation:
 ### Payments Not Working
 
 **Check Coinbase Integration:**
-```bash
+\`\`\`bash
 # Test webhook endpoint
-curl https://your-site.vercel.app/api/webhook
+curl https://promptdeal.store/api/coinbase-webhook
 
 # Should return:
 {
   "message": "PromptDeal Coinbase Commerce Webhook",
   "status": "configured"
 }
-```
+\`\`\`
 
 **Verify Environment Variables:**
 - Go to Vercel → Settings → Environment Variables
@@ -170,12 +171,12 @@ curl https://your-site.vercel.app/api/webhook
 - Check Network tab for API errors
 
 **Verify API Route:**
-```bash
+\`\`\`bash
 curl https://your-site.vercel.app/api/tools \
   -X POST \
   -H "Content-Type: application/json" \
   -d '{"tool":"titleGenerator","input":"marketing strategy"}'
-```
+\`\`\`
 
 ---
 
@@ -203,7 +204,7 @@ Before going live:
 
 Replace mock algorithms with OpenAI GPT-4:
 
-```typescript
+\`\`\`typescript
 // In app/api/tools/route.ts
 const response = await fetch('https://api.openai.com/v1/chat/completions', {
   method: 'POST',
@@ -216,7 +217,7 @@ const response = await fetch('https://api.openai.com/v1/chat/completions', {
     messages: [{ role: 'user', content: prompt }]
   })
 })
-```
+\`\`\`
 
 ### Add Database (Supabase)
 
@@ -245,6 +246,3 @@ If you encounter issues:
 5. Review Resend email logs
 
 Your site is now fully functional and ready to accept crypto payments!
-```
-
-```txt file="" isHidden

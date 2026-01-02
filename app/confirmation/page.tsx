@@ -117,7 +117,13 @@ function ConfirmationContent() {
           </div>
           <h1 className="text-4xl font-bold text-foreground mb-2">Payment Confirmed!</h1>
           <p className="text-muted-foreground text-lg">Your prompt is ready to download</p>
-          <p className="text-sm text-muted-foreground mt-4">Confirmation email sent</p>
+          {/* Delivery Confirmation Message */}
+          <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4 mt-6 max-w-md mx-auto">
+            <p className="text-sm text-green-400 font-medium">✓ Product Delivered Successfully</p>
+            <p className="text-xs text-muted-foreground mt-1">
+              Your download link has been generated and sent to your email.
+            </p>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -152,6 +158,11 @@ function ConfirmationContent() {
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Download Expires</span>
                     <span className="text-foreground text-xs">{new Date(orderData.expiresAt).toLocaleString()}</span>
+                  </div>
+                  {/* Delivery Status Field */}
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Delivery Status</span>
+                    <span className="text-green-400 font-semibold">Delivered</span>
                   </div>
                 </div>
               </CardContent>
@@ -235,6 +246,13 @@ function ConfirmationContent() {
                 <p className="flex items-start gap-2">
                   <span className="text-green-400 mt-1 font-bold">✓</span>
                   <span className="text-foreground">7-day download link</span>
+                </p>
+                {/* No-Refund Note */}
+                <p className="flex items-start gap-2 pt-2 border-t border-green-500/20">
+                  <span className="text-amber-400 mt-1 font-bold">ℹ</span>
+                  <span className="text-muted-foreground text-xs">
+                    All sales are final - see Refund Policy for details
+                  </span>
                 </p>
               </CardContent>
             </Card>

@@ -42,20 +42,20 @@ A modern marketplace for premium AI prompts focused on digital marketing. Built 
 ### Installation
 
 1. Clone the repository:
-```bash
+\`\`\`bash
 git clone https://github.com/your-username/promptdeal.git
 cd promptdeal
-```
+\`\`\`
 
 2. Install dependencies:
-```bash
+\`\`\`bash
 pnpm install
 # or
 npm install
-```
+\`\`\`
 
 3. Create a `.env.local` file in the root directory:
-```env
+\`\`\`env
 # Supabase
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
@@ -74,14 +74,14 @@ NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION=your_verification_code
 
 # Site Configuration
 NEXT_PUBLIC_SITE_URL=https://promptdeal.store
-```
+\`\`\`
 
 4. Run the development server:
-```bash
+\`\`\`bash
 pnpm dev
 # or
 npm run dev
-```
+\`\`\`
 
 5. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
@@ -116,7 +116,7 @@ Create a bucket named `prompt-packs` for storing ZIP files:
 
 ### Option 2: Deploy via Vercel CLI
 
-```bash
+\`\`\`bash
 # Install Vercel CLI
 npm i -g vercel
 
@@ -125,7 +125,7 @@ vercel login
 
 # Deploy
 vercel
-```
+\`\`\`
 
 ### Environment Variables
 
@@ -148,9 +148,9 @@ Add these in Vercel Dashboard (Settings → Environment Variables):
 
 After deployment, configure the webhook URL in Coinbase Commerce:
 
-```
-https://your-domain.vercel.app/api/webhook
-```
+\`\`\`
+https://promptdeal.store/api/webhook
+\`\`\`
 
 ## SEO Configuration
 
@@ -181,7 +181,7 @@ See `docs/SEO_SETUP.md` for detailed setup instructions.
 
 ## Project Structure
 
-```
+\`\`\`
 promptdeal/
 ├── app/
 │   ├── about/          # About Us page
@@ -221,7 +221,7 @@ promptdeal/
 └── public/
     ├── robots.txt      # Search engine directives
     └── ...             # Static assets
-```
+\`\`\`
 
 ## Features Breakdown
 
@@ -254,7 +254,7 @@ promptdeal/
 
 ## Scripts
 
-```bash
+\`\`\`bash
 # Development
 pnpm dev
 
@@ -269,7 +269,7 @@ pnpm lint
 
 # Type check
 pnpm type-check
-```
+\`\`\`
 
 ## Performance & SEO
 

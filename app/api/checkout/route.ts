@@ -4,6 +4,7 @@ interface CheckoutRequest {
   promptId?: string
   title: string
   price: number
+  email: string
   redirectUrl: string
   packType?: string
   items?: Array<{
@@ -17,9 +18,9 @@ interface CheckoutRequest {
 export async function POST(request: NextRequest) {
   try {
     const body: CheckoutRequest = await request.json()
-    const { promptId, title, price, redirectUrl, items, packType } = body
+    const { promptId, title, price, email, redirectUrl, items, packType } = body
 
-    console.log("[v0] Checkout request received:", { promptId, title, price, items, packType })
+    console.log("[v0] Checkout request received:", { promptId, title, price, email, items, packType })
 
     const apiKey = process.env.COINBASE_COMMERCE_KEY
 
@@ -55,6 +56,7 @@ export async function POST(request: NextRequest) {
         metadata: {
           promptId: promptId || "cart",
           packType: packType || null,
+          email: email,
           items: items ? JSON.stringify(items) : undefined,
         },
         redirect_url: redirectUrl,

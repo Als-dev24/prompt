@@ -3,39 +3,22 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import {
-  ArrowRight,
-  Sparkles,
-  Target,
-  TrendingUp,
-  Star,
-  Check,
-  Search,
-  Hash,
-  Lightbulb,
-  PenTool,
-  BarChart,
-  MessageSquare,
-} from "lucide-react"
+import { ArrowRight, Sparkles, Lock, Zap, Code, Star, Check, Shield, Unlock } from "lucide-react"
 import { PopularPromptsSection } from "@/components/popular-prompts-section"
 import { NewsletterForm } from "@/components/newsletter-form"
 
-const categories = [
-  { icon: Search, title: "SEO", description: "Rank higher on search engines", color: "text-blue-500" },
-  { icon: MessageSquare, title: "Social Media", description: "Viral content strategies", color: "text-purple-500" },
-  { icon: Target, title: "Ads", description: "High-converting ad copy", color: "text-green-500" },
-  { icon: PenTool, title: "Copywriting", description: "Persuasive messaging", color: "text-orange-500" },
-  { icon: TrendingUp, title: "E-commerce", description: "Product descriptions", color: "text-pink-500" },
-  { icon: BarChart, title: "Analytics", description: "Data-driven insights", color: "text-cyan-500" },
+const formulas = [
+  { icon: Code, title: "Copy", description: "Copy the powerful prompt formula", color: "text-cyan-400" },
+  { icon: Lock, title: "Paste", description: "Paste into your AI assistant", color: "text-purple-400" },
+  { icon: Zap, title: "Activate", description: "Trigger the AI magic", color: "text-amber-400" },
+  { icon: Sparkles, title: "Result", description: "Get premium quality output", color: "text-blue-400" },
 ]
 
-const tools = [
-  { icon: Lightbulb, title: "AI Title Generator", description: "Create catchy headlines" },
-  { icon: Hash, title: "Hashtag Generator", description: "Trending hashtags instantly" },
-  { icon: Search, title: "SEO Keyword Tool", description: "Find profitable keywords" },
-  { icon: Sparkles, title: "Content Ideas Generator", description: "Never run out of ideas" },
-  { icon: PenTool, title: "Ad Copy Creator", description: "High-converting ads" },
-  { icon: TrendingUp, title: "Trend Analyzer", description: "Stay ahead of trends" },
+const formulas_features = [
+  { icon: Shield, title: "Secure Crypto Payment", description: "Coinbase Commerce - Instant delivery after payment" },
+  { icon: Unlock, title: "Unlock Formulas", description: "Activate powerful AI commands instantly" },
+  { icon: Zap, title: "Battle-Tested", description: "Used by 10,000+ marketing professionals" },
+  { icon: Star, title: "Lifetime Access", description: "Download your prompts once, use forever" },
 ]
 
 const testimonials = [
@@ -60,27 +43,6 @@ const testimonials = [
     rating: 5,
     text: "My engagement went through the roof. The viral content prompts are game-changing.",
   },
-  {
-    name: "David Kim",
-    role: "SEO Specialist",
-    image: "/professional-man-glasses.jpg",
-    rating: 5,
-    text: "Finally, SEO prompts that actually understand how Google works. Highly recommend.",
-  },
-  {
-    name: "Lisa Thompson",
-    role: "Freelance Copywriter",
-    image: "/professional-woman-creative.png",
-    rating: 5,
-    text: "Cut my writing time in half while improving quality. These prompts are a copywriter's dream.",
-  },
-  {
-    name: "James Wilson",
-    role: "Agency Owner",
-    image: "/professional-man-suit.png",
-    rating: 5,
-    text: "We use these prompts for all our clients. The ROI is incredible and they keep getting updated.",
-  },
 ]
 
 export default function Home() {
@@ -93,135 +55,175 @@ export default function Home() {
 
   return (
     <>
-      <section className="relative px-4 py-16 sm:py-24 lg:py-32 sm:px-6 lg:px-8 gradient-hero overflow-hidden">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+      {/* Hero - Secret Formula Reveal */}
+      <section className="relative px-4 py-20 sm:py-32 lg:py-48 sm:px-6 lg:px-8 gradient-hero overflow-hidden min-h-screen flex items-center">
+        <div className="max-w-7xl mx-auto w-full">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
             {/* Left: Text content */}
-            <div className="text-left space-y-8">
-              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground leading-tight">
-                Boost Your Digital Marketing With{" "}
-                <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                  AI-Powered Prompts
-                </span>
-              </h1>
+            <div className="text-left space-y-10 lg:pr-8">
+              <div className="space-y-6">
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-accent/10 border border-accent/30 rounded-full">
+                  <Lock className="w-4 h-4 text-accent" />
+                  <span className="text-sm font-medium text-accent">EXCLUSIVE • CRYPTO ONLY • INSTANT DELIVERY</span>
+                </div>
 
-              <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl">
-                Create better ads, content, SEO and conversions using optimized prompts.
-              </p>
+                <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-accent leading-tight tracking-tighter">
+                  Unlock The Digital Formula
+                </h1>
 
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button
-                  size="lg"
-                  className="w-full sm:w-auto min-w-[220px] text-base rounded-xl h-14"
-                  onClick={scrollToNewsletter}
-                >
-                  Download 50 Free Prompts
-                  <ArrowRight className="ml-2 w-5 h-5" />
-                </Button>
+                <p className="text-xl sm:text-2xl text-muted-foreground max-w-2xl leading-relaxed">
+                  Powerful AI prompts crafted by elite marketers. Activate them instantly. Transform your marketing
+                  forever.
+                </p>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-4 pt-4">
                 <Link href="/pricing">
                   <Button
                     size="lg"
-                    variant="outline"
-                    className="w-full sm:w-auto min-w-[200px] text-base rounded-xl h-14 bg-transparent"
+                    className="w-full sm:w-auto min-w-[240px] text-base rounded-lg h-14 bg-gradient-to-r from-primary to-secondary hover:shadow-lg hover:shadow-primary/50 transition-all"
                   >
-                    Browse Store
+                    Access Formulas
+                    <Unlock className="ml-2 w-5 h-5" />
                   </Button>
                 </Link>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="w-full sm:w-auto min-w-[240px] text-base rounded-lg h-14 border-primary/30 hover:border-primary hover:bg-primary/5 bg-transparent"
+                  onClick={scrollToNewsletter}
+                >
+                  Get 50 Free Prompts
+                  <ArrowRight className="ml-2 w-5 h-5" />
+                </Button>
               </div>
 
-              <div className="space-y-3 pt-4">
-                <div className="flex items-center gap-3">
-                  <Check className="w-5 h-5 text-green-500 flex-shrink-0" />
-                  <span className="text-foreground font-medium">250+ Prompts</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <Check className="w-5 h-5 text-green-500 flex-shrink-0" />
-                  <span className="text-foreground font-medium">Optimized for ChatGPT</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <Check className="w-5 h-5 text-green-500 flex-shrink-0" />
-                  <span className="text-foreground font-medium">Marketing – Ads – SEO – E-commerce</span>
+              <div className="space-y-2 pt-4">
+                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Trust Indicators</p>
+                <div className="space-y-2">
+                  <div className="flex items-center gap-3">
+                    <Check className="w-5 h-5 text-secondary flex-shrink-0" />
+                    <span className="text-foreground">500+ Battle-Tested Prompts</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Check className="w-5 h-5 text-secondary flex-shrink-0" />
+                    <span className="text-foreground">Instant Crypto Payment • Same-Day Delivery</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Check className="w-5 h-5 text-secondary flex-shrink-0" />
+                    <span className="text-foreground">Lifetime Access • No Subscriptions</span>
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Right: Illustration */}
-            <div className="relative">
-              <div className="relative w-full aspect-square max-w-lg mx-auto">
-                <img
-                  src="/3d-robot-ai-marketing-dashboard-holographic.jpg"
-                  alt="AI Marketing Dashboard"
-                  className="w-full h-full object-contain animate-float"
-                />
+            {/* Right: Visual representation of formula */}
+            <div className="relative hidden lg:block">
+              <div className="formula-code">
+                <div className="text-sm leading-relaxed space-y-1">
+                  <div>
+                    <span className="text-secondary">{"// Unlock the formula"}</span>
+                  </div>
+                  <div>
+                    <span className="text-muted-foreground">{"const prompt = {"}</span>
+                  </div>
+                  <div className="pl-4">
+                    <div>
+                      <span className="text-accent">role:</span> <span className="text-primary">"elite marketer"</span>
+                      <span className="text-muted-foreground">,</span>
+                    </div>
+                    <div>
+                      <span className="text-accent">task:</span>{" "}
+                      <span className="text-primary">"create high-impact content"</span>
+                      <span className="text-muted-foreground">,</span>
+                    </div>
+                    <div>
+                      <span className="text-accent">result:</span>{" "}
+                      <span className="text-primary">"10x conversion"</span>
+                      <span className="text-muted-foreground">,</span>
+                    </div>
+                    <div>
+                      <span className="text-accent">format:</span> <span className="text-primary">"battle-tested"</span>
+                      <span className="text-muted-foreground">,</span>
+                    </div>
+                  </div>
+                  <div>
+                    <span className="text-muted-foreground">{"}"}</span>
+                  </div>
+                  <div className="pt-2">
+                    <span className="text-secondary">{"// Activate:"}</span>
+                  </div>
+                  <div>
+                    <span className="text-accent">activate</span>
+                    <span className="text-muted-foreground">(prompt)</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="px-4 py-16 sm:py-20 sm:px-6 lg:px-8">
+      {/* How It Works - Copy Paste Activate */}
+      <section className="px-4 py-20 sm:py-24 sm:px-6 lg:px-8 bg-card/50 border-t border-border">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">Prompt Categories</h2>
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-foreground mb-6">
+              The Ritual: Copy → Paste → Activate → Result
+            </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Choose from our expertly crafted prompt categories
+              Simple 4-step process to harness the power of AI formulas
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {categories.map((category, index) => {
-              const Icon = category.icon
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {formulas.map((formula, index) => {
+              const Icon = formula.icon
               return (
-                <Card
-                  key={index}
-                  className="border-2 hover:border-primary transition-all duration-300 cursor-pointer card-hover rounded-2xl"
-                >
-                  <CardContent className="p-8 text-center">
-                    <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-2xl mb-4">
-                      <Icon className={`w-8 h-8 ${category.color}`} />
+                <div key={index} className="relative">
+                  <div className="formula-card h-full p-8 flex flex-col items-center text-center space-y-4">
+                    <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-xl">
+                      <Icon className={`w-8 h-8 ${formula.color}`} />
                     </div>
-                    <h3 className="text-xl font-semibold text-foreground mb-2">{category.title}</h3>
-                    <p className="text-muted-foreground">{category.description}</p>
-                  </CardContent>
-                </Card>
+                    <h3 className="text-2xl font-bold text-foreground">Step {index + 1}</h3>
+                    <p className="text-lg font-semibold text-foreground">{formula.title}</p>
+                    <p className="text-muted-foreground text-sm">{formula.description}</p>
+                  </div>
+                  {index < formulas.length - 1 && (
+                    <div className="hidden lg:flex absolute -right-3 top-1/2 -translate-y-1/2 items-center justify-center w-6 h-6 bg-background border border-border rounded-full z-10">
+                      <ArrowRight className="w-4 h-4 text-primary" />
+                    </div>
+                  )}
+                </div>
               )
             })}
           </div>
         </div>
       </section>
 
-      <PopularPromptsSection />
-
-      <section className="px-4 py-16 sm:py-20 sm:px-6 lg:px-8">
+      {/* Features Grid */}
+      <section className="px-4 py-20 sm:py-24 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">Free Marketing Tools</h2>
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-foreground mb-6">Why Choose PromptDeal?</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Powerful AI tools to boost your marketing efforts
+              Everything you need to master AI-powered marketing
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {tools.map((tool, index) => {
-              const Icon = tool.icon
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {formulas_features.map((feature, index) => {
+              const Icon = feature.icon
               return (
-                <Card
-                  key={index}
-                  className="border-2 hover:border-primary transition-all duration-300 cursor-pointer card-hover rounded-2xl"
-                >
-                  <CardContent className="p-6">
-                    <div className="flex items-start gap-4">
-                      <div className="p-3 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-xl">
-                        <Icon className="w-6 h-6 text-primary" />
+                <Card key={index} className="formula-card border-border hover:border-primary/50">
+                  <CardContent className="p-8">
+                    <div className="flex gap-6">
+                      <div className="inline-flex items-center justify-center w-14 h-14 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-lg flex-shrink-0">
+                        <Icon className="w-7 h-7 text-primary" />
                       </div>
                       <div className="flex-1">
-                        <h3 className="text-lg font-semibold text-foreground mb-2">{tool.title}</h3>
-                        <p className="text-sm text-muted-foreground mb-4">{tool.description}</p>
-                        <Link href="/tools">
-                          <Button size="sm" variant="ghost" className="rounded-xl">
-                            Try Tool <ArrowRight className="ml-2 w-4 h-4" />
-                          </Button>
-                        </Link>
+                        <h3 className="text-xl font-bold text-foreground mb-2">{feature.title}</h3>
+                        <p className="text-muted-foreground">{feature.description}</p>
                       </div>
                     </div>
                   </CardContent>
@@ -229,59 +231,60 @@ export default function Home() {
               )
             })}
           </div>
-
-          <div className="text-center mt-12">
-            <Link href="/tools">
-              <Button size="lg" variant="outline" className="rounded-xl bg-transparent">
-                View All Tools
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
-            </Link>
-          </div>
         </div>
       </section>
 
-      <section id="newsletter-section" className="px-4 py-16 sm:py-20 sm:px-6 lg:px-8 bg-muted/30">
+      {/* Popular Prompts */}
+      <PopularPromptsSection />
+
+      {/* Newsletter CTA */}
+      <section
+        id="newsletter-section"
+        className="px-4 py-20 sm:py-24 sm:px-6 lg:px-8 bg-card/50 border-t border-b border-border"
+      >
         <div className="max-w-4xl mx-auto">
-          <Card className="border-2 rounded-3xl overflow-hidden">
-            <CardContent className="p-8 sm:p-12 text-center">
-              <Sparkles className="w-12 h-12 text-primary mx-auto mb-6" />
-              <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-                Receive 50 Free Marketing Prompts Every Week
-              </h2>
-              <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-                Join 10,000+ marketers getting exclusive prompts, tips, and strategies delivered to their inbox.
-              </p>
+          <Card className="formula-card border-primary/20">
+            <CardContent className="p-12 sm:p-16 text-center space-y-8">
+              <div className="space-y-4">
+                <Unlock className="w-16 h-16 text-accent mx-auto" />
+                <h2 className="text-3xl sm:text-4xl font-black text-foreground">Download 50 Free Marketing Prompts</h2>
+                <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                  Unlock instant access to our starter formula pack. No credit card required. Crypto or email.
+                </p>
+              </div>
               <NewsletterForm />
             </CardContent>
           </Card>
         </div>
       </section>
 
-      <section className="px-4 py-16 sm:py-20 sm:px-6 lg:px-8">
+      {/* Testimonials */}
+      <section className="px-4 py-20 sm:py-24 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-              Loved by Marketers Worldwide
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-foreground mb-6">
+              Trusted by Elite Marketers
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">See what our customers are saying</p>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              See how our formulas are transforming marketing teams worldwide
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
-              <Card key={index} className="border-2 rounded-2xl">
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-1 mb-4">
+              <Card key={index} className="formula-card border-border/50">
+                <CardContent className="p-8">
+                  <div className="flex items-center gap-1 mb-6">
                     {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+                      <Star key={i} className="w-5 h-5 fill-accent text-accent" />
                     ))}
                   </div>
-                  <p className="text-foreground mb-6 leading-relaxed">{testimonial.text}</p>
-                  <div className="flex items-center gap-3">
+                  <p className="text-foreground mb-8 leading-relaxed text-lg">{testimonial.text}</p>
+                  <div className="flex items-center gap-4 pt-6 border-t border-border/30">
                     <img
                       src={testimonial.image || "/placeholder.svg"}
                       alt={testimonial.name}
-                      className="w-12 h-12 rounded-full object-cover"
+                      className="w-12 h-12 rounded-full object-cover border border-border"
                     />
                     <div>
                       <p className="font-semibold text-foreground">{testimonial.name}</p>
@@ -295,29 +298,57 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA section */}
-      <section className="px-4 py-16 sm:py-24 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-            Ready to 10x Your Marketing Results?
+      {/* Final CTA */}
+      <section className="px-4 py-20 sm:py-32 sm:px-6 lg:px-8 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-secondary/5 pointer-events-none" />
+        <div className="max-w-4xl mx-auto text-center relative z-10">
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary mb-6">
+            Ready to Unlock Your Formula?
           </h2>
-          <p className="text-lg sm:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Join thousands of marketers using PromptDeal to create better campaigns faster
+          <p className="text-lg sm:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto">
+            Join 10,000+ marketing professionals using PromptDeal formulas to dominate their market
           </p>
-          <Link href="/pricing">
-            <Button size="lg" className="text-base min-w-[220px] h-14 rounded-xl">
-              Get Started Now
-              <ArrowRight className="ml-2 w-5 h-5" />
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+            <Link href="/pricing">
+              <Button
+                size="lg"
+                className="text-base min-w-[240px] h-14 rounded-lg bg-gradient-to-r from-primary to-secondary hover:shadow-lg hover:shadow-primary/50"
+              >
+                Access All Formulas
+                <ArrowRight className="ml-2 w-5 h-5" />
+              </Button>
+            </Link>
+            <Button
+              size="lg"
+              variant="outline"
+              className="text-base min-w-[240px] h-14 rounded-lg border-primary/30 bg-transparent"
+              onClick={scrollToNewsletter}
+            >
+              Start Free
             </Button>
-          </Link>
+          </div>
 
-          <div className="mt-12 pt-12 border-t">
-            <p className="text-sm text-muted-foreground mb-4">Accepted Cryptocurrencies</p>
-            <div className="flex flex-wrap justify-center gap-6 sm:gap-8">
-              <span className="text-sm font-medium text-foreground">Bitcoin (BTC)</span>
-              <span className="text-sm font-medium text-foreground">Ethereum (ETH)</span>
-              <span className="text-sm font-medium text-foreground">USDC</span>
-              <span className="text-sm font-medium text-foreground">Solana (SOL)</span>
+          <div className="pt-8 border-t border-border/30">
+            <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-4">
+              Secure Crypto Payments
+            </p>
+            <div className="flex flex-wrap justify-center gap-8 sm:gap-12">
+              <div className="crypto-badge">
+                <span className="font-mono">₿</span>
+                Bitcoin
+              </div>
+              <div className="crypto-badge">
+                <span className="font-mono">◆</span>
+                Ethereum
+              </div>
+              <div className="crypto-badge">
+                <span className="font-mono">◈</span>
+                USDC
+              </div>
+              <div className="crypto-badge">
+                <span className="font-mono">◎</span>
+                Solana
+              </div>
             </div>
           </div>
         </div>

@@ -65,6 +65,11 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/refund-policy" className="text-background/70 hover:text-background transition">
+                  Refund Policy
+                </Link>
+              </li>
+              <li>
                 <Link href="/legal" className="text-background/70 hover:text-background transition">
                   Legal
                 </Link>

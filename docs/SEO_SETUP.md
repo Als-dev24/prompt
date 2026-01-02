@@ -6,7 +6,7 @@ This guide will help you configure SEO and analytics for PromptDeal.
 
 Add these to your Vercel project or `.env.local`:
 
-```bash
+\`\`\`bash
 # Google Analytics 4
 NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
 
@@ -15,7 +15,7 @@ NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION=your_verification_code
 
 # Site URL (for canonical URLs and sitemaps)
 NEXT_PUBLIC_SITE_URL=https://promptdeal.store
-```
+\`\`\`
 
 ## Google Analytics 4 Setup
 
@@ -116,7 +116,7 @@ The sitemap is auto-generated at `/sitemap.xml`:
 
 Located at `/public/robots.txt`:
 
-```txt
+\`\`\`txt
 User-agent: *
 Allow: /
 
@@ -125,7 +125,7 @@ Disallow: /api/
 Disallow: /admin/
 
 Sitemap: https://promptdeal.store/sitemap.xml
-```
+\`\`\`
 
 ## Open Graph Images
 

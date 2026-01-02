@@ -1,12 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { createAdminClient } from "@/lib/supabase/admin"
 
-// Secure download endpoint with one-time use tokens
-// In production, this would:
-// 1. Verify the charge was paid
-// 2. Check if the token is still valid
-// 3. Serve the prompt file from storage
-
 interface DownloadParams {
   params: Promise<{ chargeId: string }>
 }
@@ -17,12 +11,27 @@ export async function GET(request: NextRequest, { params }: DownloadParams) {
 
     console.log("[DOWNLOAD] File requested for charge:", chargeId)
 
-    const searchParams = request.nextUrl.searchParams
-    const packType = searchParams.get("pack") || "starter"
+    const supabase = createAdminClient()
+
+    const { data: order, error: orderError } = await supabase
+      .from("orders")
+      .select("email, pack_type, payment_status, download_status")
+      .eq("charge_id", chargeId)
+      .single()
+
+    if (orderError || !order) {
+      console.error("[DOWNLOAD] Order not found:", orderError)
+      return NextResponse.json({ error: "Order not found" }, { status: 404 })
+    }
+
+    if (order.payment_status !== "paid") {
+      console.error("[DOWNLOAD] Payment not completed for this order")
+      return NextResponse.json({ error: "Payment not completed" }, { status: 403 })
+    }
+
+    const packType = order.pack_type || "starter"
 
     console.log("[DOWNLOAD] Pack type:", packType)
-
-    const supabase = createAdminClient()
 
     const { data: product, error } = await supabase
       .from("products")
@@ -39,7 +48,7 @@ export async function GET(request: NextRequest, { params }: DownloadParams) {
 
     const { data: signedUrlData, error: signedUrlError } = await supabase.storage
       .from("prompt-packs")
-      .createSignedUrl(product.zip_path, 3600) // 3600 seconds = 60 minutes
+      .createSignedUrl(product.zip_path, 3600)
 
     if (signedUrlError || !signedUrlData) {
       console.error("[DOWNLOAD] Error generating signed URL:", signedUrlError)
@@ -47,6 +56,21 @@ export async function GET(request: NextRequest, { params }: DownloadParams) {
         { error: "Failed to generate download link. Make sure the file exists in Storage." },
         { status: 500 },
       )
+    }
+
+    const { error: updateError } = await supabase
+      .from("orders")
+      .update({
+        download_status: true,
+        downloaded_at: new Date().toISOString(),
+      })
+      .eq("charge_id", chargeId)
+
+    if (updateError) {
+      console.error("[DOWNLOAD] Error updating download status:", updateError)
+      // Continue anyway, file should still download
+    } else {
+      console.log("[DOWNLOAD] Download status updated for charge:", chargeId)
     }
 
     console.log("[DOWNLOAD] Generated signed URL successfully")

@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { trackBeginCheckout } from "@/components/analytics"
+import Link from "next/link"
 
 export default function CheckoutPage() {
   const router = useRouter()
@@ -16,6 +17,7 @@ export default function CheckoutPage() {
   const [selectedCrypto, setSelectedCrypto] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [mounted, setMounted] = useState(false)
+  const [agreedToRefundPolicy, setAgreedToRefundPolicy] = useState(false)
 
   useEffect(() => {
     setMounted(true)
@@ -56,6 +58,11 @@ export default function CheckoutPage() {
 
     if (!selectedCrypto) {
       setError("Please select a payment method")
+      return
+    }
+
+    if (!agreedToRefundPolicy) {
+      setError("Please agree to the Refund Policy to continue")
       return
     }
 
@@ -181,6 +188,36 @@ export default function CheckoutPage() {
                 ))}
               </CardContent>
             </Card>
+
+            {/* Refund policy disclaimer card */}
+            <div className="bg-amber-500/10 border border-amber-500/30 rounded-2xl p-6">
+              <h3 className="font-semibold text-amber-400 mb-2">⚠️ Important Notice</h3>
+              <p className="text-sm text-muted-foreground mb-4">
+                All sales are final. Digital products are non-refundable once delivered or downloaded. Cryptocurrency
+                payments are irreversible.
+              </p>
+              <Link href="/refund-policy" className="text-sm text-primary hover:underline">
+                Read our full Refund Policy →
+              </Link>
+            </div>
+
+            {/* Refund policy checkbox */}
+            <div className="flex items-start gap-3 p-4 bg-card border border-border rounded-xl">
+              <input
+                type="checkbox"
+                id="refund-policy"
+                checked={agreedToRefundPolicy}
+                onChange={(e) => setAgreedToRefundPolicy(e.target.checked)}
+                className="mt-1 w-5 h-5 rounded border-border accent-primary cursor-pointer"
+              />
+              <label htmlFor="refund-policy" className="flex-1 text-sm text-muted-foreground cursor-pointer">
+                I have read and agree to the{" "}
+                <Link href="/refund-policy" className="text-primary hover:underline">
+                  Refund Policy
+                </Link>{" "}
+                and understand that all sales are final
+              </label>
+            </div>
           </div>
 
           {/* Right: Order summary */}
@@ -210,12 +247,19 @@ export default function CheckoutPage() {
                   size="lg"
                   className="w-full h-14 rounded-xl text-base"
                   onClick={handleCreateCheckout}
-                  disabled={loading || !email || !selectedCrypto}
+                  disabled={loading || !email || !selectedCrypto || !agreedToRefundPolicy}
                 >
                   {loading ? "Processing..." : "Complete Purchase"}
                 </Button>
 
-                <div className="space-y-2 pt-4 border-t border-border">
+                {/* Crypto disclaimer */}
+                <div className="pt-4 border-t border-border space-y-3">
+                  <div className="bg-amber-500/10 border border-amber-500/30 rounded p-3">
+                    <p className="text-xs text-amber-400 font-medium mb-1">Crypto Payment Notice</p>
+                    <p className="text-xs text-muted-foreground">
+                      Cryptocurrency transactions are irreversible. Please verify all details before payment.
+                    </p>
+                  </div>
                   <div className="flex items-center gap-2 text-sm text-muted-foreground">
                     <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                     <span>Instant delivery after confirmation</span>
