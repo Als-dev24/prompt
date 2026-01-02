@@ -12,7 +12,6 @@ export function Navigation() {
   const [cartOpen, setCartOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [darkMode, setDarkMode] = useState(false)
-  //const [language, setLanguage] = useState("EN")
   const { itemCount } = useCart()
 
   useEffect(() => {
@@ -28,12 +27,6 @@ export function Navigation() {
     document.documentElement.classList.toggle("dark")
   }
 
-/*   const cycleLanguage = () => {
-    const languages = ["EN", "FR", "AR"]
-    const currentIndex = languages.indexOf(language)
-    const nextIndex = (currentIndex + 1) % languages.length
-    setLanguage(languages[nextIndex])
-  } */
 
   return (
     <>
@@ -164,13 +157,6 @@ export function Navigation() {
                   >
                     {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
                   </button>
-                /*   <button
-                    onClick={cycleLanguage}
-                    className="flex items-center gap-1 p-2 hover:bg-muted rounded-lg transition text-sm font-medium"
-                  >
-                    <Globe className="h-4 w-4" />
-                    {language}
-                  </button> */
                 </div>
                 <button
                   onClick={() => {
