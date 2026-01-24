@@ -21,29 +21,6 @@ const formulas_features = [
   { icon: Star, title: "Lifetime Access", description: "Download your prompts once, use forever" },
 ]
 
-const testimonials = [
-  {
-    name: "Sarah Johnson",
-    role: "Marketing Director",
-    image: "/professional-woman-diverse.png",
-    rating: 5,
-    text: "These prompts 10x'd our content output. We're ranking for keywords we never thought possible.",
-  },
-  {
-    name: "Michael Chen",
-    role: "E-commerce Owner",
-    image: "/professional-man.jpg",
-    rating: 5,
-    text: "Increased our conversion rate by 40% using the product description prompts. Worth every penny.",
-  },
-  {
-    name: "Emma Rodriguez",
-    role: "Social Media Manager",
-    image: "/professional-woman-smiling.png",
-    rating: 5,
-    text: "My engagement went through the roof. The viral content prompts are game-changing.",
-  },
-]
 
 export default function Home() {
   const scrollToNewsletter = () => {
@@ -258,45 +235,75 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="px-4 py-20 sm:py-24 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-foreground mb-6">
-              Trusted by Elite Marketers
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              See how our formulas are transforming marketing teams worldwide
-            </p>
-          </div>
+{/* Free Tools Preview */}
+<section className="px-4 py-20 sm:py-24 sm:px-6 lg:px-8 bg-card/40 border-t border-border">
+  <div className="max-w-6xl mx-auto">
+    <div className="text-center mb-16">
+      <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-foreground mb-6">
+        Free AI Tools – Try Before You Upgrade
+      </h2>
+      <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+        No fake reviews. Just real tools you can use right now.
+      </p>
+    </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <Card key={index} className="formula-card border-border/50">
-                <CardContent className="p-8">
-                  <div className="flex items-center gap-1 mb-6">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star key={i} className="w-5 h-5 fill-accent text-accent" />
-                    ))}
-                  </div>
-                  <p className="text-foreground mb-8 leading-relaxed text-lg">{testimonial.text}</p>
-                  <div className="flex items-center gap-4 pt-6 border-t border-border/30">
-                    <img
-                      src={testimonial.image || "/placeholder.svg"}
-                      alt={testimonial.name}
-                      className="w-12 h-12 rounded-full object-cover border border-border"
-                    />
-                    <div>
-                      <p className="font-semibold text-foreground">{testimonial.name}</p>
-                      <p className="text-sm text-muted-foreground">{testimonial.role}</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
+    {/* Tools Preview */}
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <Card className="formula-card border-border/50 hover:border-primary/50 transition">
+        <CardContent className="p-8 space-y-4">
+          <h3 className="text-2xl font-bold text-foreground">
+            AI Title Generator
+          </h3>
+          <p className="text-muted-foreground">
+            Generate catchy headlines that grab attention and drive clicks.
+          </p>
+          <Link
+            href="/tools"
+            className="inline-flex items-center text-primary font-semibold"
+          >
+            Try it free <ArrowRight className="ml-2 w-4 h-4" />
+          </Link>
+        </CardContent>
+      </Card>
+
+      <Card className="formula-card border-border/50 hover:border-primary/50 transition">
+        <CardContent className="p-8 space-y-4">
+          <h3 className="text-2xl font-bold text-foreground">
+            Hashtag Generator
+          </h3>
+          <p className="text-muted-foreground">
+            Discover trending hashtags to boost reach and engagement.
+          </p>
+          <Link
+            href="/tools"
+            className="inline-flex items-center text-primary font-semibold"
+          >
+            Try it free <ArrowRight className="ml-2 w-4 h-4" />
+          </Link>
+        </CardContent>
+      </Card>
+    </div>
+
+    {/* More tools CTA */}
+    <div className="mt-16 text-center">
+      <p className="text-sm text-muted-foreground mb-6">
+        More free tools available — no signup required.
+      </p>
+      <Link href="/tools">
+        <Button
+          size="lg"
+          variant="outline"
+          className="rounded-xl border-primary/30 bg-transparent"
+        >
+          More Free Tools
+          <ArrowRight className="ml-2 w-5 h-5" />
+        </Button>
+      </Link>
+    </div>
+  </div>
+</section>
+
+
 
       {/* Final CTA */}
       <section className="px-4 py-20 sm:py-32 sm:px-6 lg:px-8 relative overflow-hidden">
@@ -353,6 +360,77 @@ export default function Home() {
           </div>
         </div>
       </section>
+	  
+	  {/* Contact Us */}
+<section className="px-4 py-20 sm:py-24 sm:px-6 lg:px-8 bg-card/50 border-t border-border">
+  <div className="max-w-3xl mx-auto">
+    <Card className="formula-card border-border">
+      <CardContent className="p-10 sm:p-14 space-y-8">
+        <div className="text-center">
+          <h2 className="text-3xl sm:text-4xl font-black text-foreground mb-4">
+            Contact Us
+          </h2>
+          <p className="text-muted-foreground">
+            Have a question or need help? Send us a message.
+          </p>
+        </div>
+
+        <form
+          className="space-y-6"
+          onSubmit={async (e) => {
+            e.preventDefault()
+            const form = e.currentTarget
+            const email = form.email.value
+            const message = form.message.value
+
+            await fetch("/api/contact", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ email, message }),
+            })
+
+            form.reset()
+            alert("Message sent successfully ✅")
+          }}
+        >
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Your Email</label>
+            <input
+              type="email"
+              name="email"
+              required
+              className="w-full rounded-xl border border-border bg-background p-3"
+              placeholder="you@email.com"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Message</label>
+            <textarea
+              name="message"
+              required
+              maxLength={1000}
+              className="w-full min-h-[150px] rounded-xl border border-border bg-background p-3"
+              placeholder="Write your message (max 1000 characters)"
+            />
+            <p className="text-xs text-muted-foreground text-right">
+              Max 1000 characters
+            </p>
+          </div>
+
+          <Button
+            type="submit"
+            size="lg"
+            className="w-full rounded-xl bg-gradient-to-r from-primary to-secondary"
+          >
+            Send Message
+          </Button>
+        </form>
+      </CardContent>
+    </Card>
+  </div>
+</section>
+
     </>
   )
 }
