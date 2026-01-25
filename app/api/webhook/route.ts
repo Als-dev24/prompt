@@ -249,7 +249,7 @@ export async function POST(request: NextRequest) {
 export async function GET() {
   return NextResponse.json({
     message: "PromptDeal Coinbase Commerce Webhook",
-    endpoint: "/api/coinbase-webhook",
+    endpoint: "/api/webhook",
     status: process.env.COINBASE_WEBHOOK_SECRET ? "configured" : "not_configured",
     supportedEvents: ["charge:confirmed", "charge:failed", "charge:pending"],
   })
