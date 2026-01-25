@@ -1,64 +1,256 @@
 import { type NextRequest, NextResponse } from "next/server"
+import crypto from "crypto"
+import { createAdminClient } from "@/lib/supabase/admin"
+
+interface ChargeData {
+  id: string
+  code: string
+  name: string
+  description: string
+  hosted_url: string
+  pricing: {
+    local: { amount: string; currency: string }
+    bitcoin?: { amount: string }
+    ethereum?: { amount: string }
+    usdc?: { amount: string }
+  }
+  metadata?: {
+    promptId?: string
+    items?: string
+    email?: string
+    packType?: string
+  }
+  timeline: Array<{
+    status: string
+    time: string
+  }>
+}
+
+interface WebhookEvent {
+  id: string
+  scheduled_for: string
+  event: {
+    type: string
+    data: ChargeData
+    created_at: string
+  }
+}
+
+async function sendConfirmationEmail(promptId: string, downloadUrl: string, email: string, items?: any[]) {
+  const apiKey = process.env.RESEND_API_KEY
+
+  if (!apiKey) {
+    console.log("[v0] Warning: RESEND_API_KEY not set, skipping email")
+    return { success: false, message: "Email API key not configured" }
+  }
+
+  try {
+    console.log("[v0] Sending confirmation email to:", email)
+
+    const response = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: "PromptDeal <orders@promptdeal.com>",
+        to: email,
+        subject: "Your PromptDeal Purchase Confirmed! 🎉",
+        html: `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+            <h2 style="color: #7c3aed;">Thank you for your purchase!</h2>
+            <p>Your premium AI prompt${items ? "s are" : " is"} ready to download.</p>
+            ${
+              items
+                ? `
+              <h3>Your Items:</h3>
+              <ul>
+                ${items.map((item) => `<li>${item.title} - $${item.price}</li>`).join("")}
+              </ul>
+            `
+                : ""
+            }
+            <div style="margin: 30px 0;">
+              <a href="${downloadUrl}" 
+                 style="background: #7c3aed; color: white; padding: 15px 30px; 
+                        text-decoration: none; border-radius: 8px; display: inline-block;">
+                Download Your Prompt${items ? "s" : ""}
+              </a>
+            </div>
+            <p style="color: #666; font-size: 14px;">This link will expire in 7 days.</p>
+            <hr style="margin: 30px 0; border: none; border-top: 1px solid #eee;">
+            <p style="color: #999; font-size: 12px;">
+              PromptDeal - Premium AI Prompts for Marketing & Content Creation
+            </p>
+          </div>
+        `,
+      }),
+    })
+
+    if (!response.ok) {
+      const errorData = await response.json()
+      console.error("[v0] Resend API error:", errorData)
+      return { success: false, message: "Failed to send email" }
+    }
+
+    const data = await response.json()
+    console.log("[v0] Email sent successfully:", data.id)
+
+    return { success: true, emailId: data.id }
+  } catch (error) {
+    console.error("[v0] Email sending error:", error)
+    return { success: false, message: "Email error" }
+  }
+}
+
+function verifyWebhookSignature(signature: string | null, body: string): boolean {
+  if (!signature) {
+    console.log("[v0] No signature provided")
+    return false
+  }
+
+  const secret = process.env.COINBASE_WEBHOOK_SECRET
+
+  if (!secret) {
+    console.log("[v0] Warning: COINBASE_WEBHOOK_SECRET not set, skipping verification")
+    return true // Allow in development mode
+  }
+
+  const hash = crypto.createHmac("sha256", secret).update(body).digest("hex")
+
+  const isValid = hash === signature
+  console.log("[v0] Webhook signature valid:", isValid)
+
+  return isValid
+}
 
 export async function POST(request: NextRequest) {
   try {
-    // On skip la verification de signature pour test Postman
-    // (en production, il faut vérifier X-CC-Webhook-Signature)
+    const signature = request.headers.get("X-CC-Webhook-Signature")
     const body = await request.text()
 
-    let webhookData
-    try {
-      webhookData = JSON.parse(body)
-    } catch {
-      return NextResponse.json({ error: "Invalid JSON" }, { status: 400 })
+    console.log("[v0] Webhook received")
+
+    if (!verifyWebhookSignature(signature, body)) {
+      console.log("[v0] Invalid webhook signature")
+      return NextResponse.json({ error: "Invalid signature" }, { status: 401 })
     }
 
-    const { event } = webhookData
-    const { type, data } = event
+    const webhookData: WebhookEvent = JSON.parse(body)
+    const event = webhookData.event
 
-    console.log("[TEST] Webhook event type:", type)
-    console.log("[TEST] Event data:", data)
+    console.log("[v0] Webhook event type:", event.type)
 
-    // Simulate order insert / email sending
-    if (type === "charge:confirmed") {
-      console.log("[TEST] Payment confirmed for:", data.metadata?.email)
+    if (event.type === "charge:confirmed") {
+      const { id: chargeId, metadata, pricing, name } = event.data
+      const promptId = metadata?.promptId
+      const itemsData = metadata?.items ? JSON.parse(metadata.items) : null
+      const email = metadata?.email || "unknown@example.com"
+      const packType = metadata?.packType || "cart"
+
+      console.log("[v0] Payment confirmed:", {
+        chargeId,
+        email,
+        packType,
+        amount: pricing.local.amount,
+      })
+
+      const supabase = createAdminClient()
+
+      const { error: insertError } = await supabase.from("orders").insert([
+        {
+          email,
+          charge_id: chargeId,
+          pack_type: packType,
+          amount: Number.parseFloat(pricing.local.amount),
+          payment_status: "paid",
+          download_status: false,
+        },
+      ])
+
+      if (insertError) {
+        console.error("[v0] Error inserting order:", insertError)
+        // Continue anyway, order might already exist
+      } else {
+        console.log("[v0] Order inserted successfully")
+      }
+
+      // Generate download link
+      const downloadUrl = `${new URL(request.url).origin}/api/download/${chargeId}`
+
+      // Send confirmation email
+      await sendConfirmationEmail(promptId || "cart", downloadUrl, email, itemsData)
+
       return NextResponse.json({
         received: true,
-        event: type,
-        chargeId: data.id,
-        message: "Payment confirmed successfully (test mode)",
+        event: "charge:confirmed",
+        chargeId,
+        message: "Payment confirmed successfully",
       })
     }
 
-    if (type === "charge:failed") {
+    if (event.type === "charge:failed") {
+      const { id: chargeId, metadata } = event.data
+      const email = metadata?.email || "unknown@example.com"
+
+      console.log("[v0] Payment failed:", { chargeId, email })
+
+      const supabase = createAdminClient()
+
+      await supabase.from("orders").update({ payment_status: "failed" }).eq("charge_id", chargeId)
+
       return NextResponse.json({
         received: true,
-        event: type,
-        chargeId: data.id,
-        message: "Payment failed (test mode)",
+        event: "charge:failed",
+        chargeId,
       })
     }
 
-    if (type === "charge:pending") {
+    if (event.type === "charge:pending") {
+      const { id: chargeId } = event.data
+
+      console.log("[v0] Payment pending:", { chargeId })
+
+      const supabase = createAdminClient()
+      const email = event.data.metadata?.email || "unknown@example.com"
+      const packType = event.data.metadata?.packType || "cart"
+
+      await supabase.from("orders").insert([
+        {
+          email,
+          charge_id: chargeId,
+          pack_type: packType,
+          amount: Number.parseFloat(event.data.pricing.local.amount),
+          payment_status: "pending",
+          download_status: false,
+        },
+      ])
+
       return NextResponse.json({
         received: true,
-        event: type,
-        chargeId: data.id,
-        message: "Payment pending (test mode)",
+        event: "charge:pending",
+        chargeId,
       })
     }
 
-    return NextResponse.json({ received: true, message: "Event logged (test mode)" })
+    console.log("[v0] Unhandled event type:", event.type)
+
+    return NextResponse.json({
+      received: true,
+      message: "Event logged",
+    })
   } catch (error) {
-    console.error("[TEST] Webhook processing error:", error)
+    console.error("[v0] Webhook processing error:", error)
     return NextResponse.json({ error: "Webhook processing failed" }, { status: 500 })
   }
 }
 
 export async function GET() {
   return NextResponse.json({
-    message: "PromptDeal Coinbase Commerce Webhook (test mode)",
+    message: "PromptDeal Coinbase Commerce Webhook",
     endpoint: "/api/coinbase-webhook",
+    status: process.env.COINBASE_WEBHOOK_SECRET ? "configured" : "not_configured",
     supportedEvents: ["charge:confirmed", "charge:failed", "charge:pending"],
   })
 }
