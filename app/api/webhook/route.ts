@@ -113,7 +113,7 @@ function verifyWebhookSignature(signature: string | null, body: string): boolean
   const secret = process.env.COINBASE_WEBHOOK_SECRET
 
   if (!secret) {
-    //console.log("[v0] Warning: COINBASE_WEBHOOK_SECRET not set, skipping verification")
+    console.log("[v0] Warning: COINBASE_WEBHOOK_SECRET not set, skipping verification")
     return true // Allow in development mode
   }
 
