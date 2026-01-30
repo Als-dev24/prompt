@@ -3,112 +3,88 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* ======================================================
-   LIGHT MODE (DEFAULT) – Conversion Friendly
-====================================================== */
 :root {
-  /* Base */
-  --background: oklch(0.98 0.005 260);
-  --foreground: oklch(0.18 0.01 260);
+  /* Modern AI SaaS theme - Clean white with vibrant accents */
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.15 0.02 265);
+  --card: oklch(0.98 0.01 0);
+  --card-foreground: oklch(0.15 0.02 265);
+  --popover: oklch(0.98 0.01 0);
+  --popover-foreground: oklch(0.15 0.02 265);
 
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.2 0.01 260);
+  /* Primary: Electric Blue → Violet gradient */
+  --primary: oklch(0.55 0.24 260);
+  --primary-foreground: oklch(1 0 0);
 
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.18 0.01 260);
+  /* Secondary: Vibrant Violet */
+  --secondary: oklch(0.58 0.22 280);
+  --secondary-foreground: oklch(1 0 0);
 
-  /* Brand */
-  --primary: oklch(0.62 0.22 265);
-  --primary-foreground: oklch(0.98 0 0);
+  /* Accent: Electric Blue */
+  --accent: oklch(0.58 0.28 240);
+  --accent-foreground: oklch(1 0 0);
 
-  --secondary: oklch(0.6 0.2 180);
-  --secondary-foreground: oklch(0.15 0 0);
+  --muted: oklch(0.5 0.01 0);
+  --muted-foreground: oklch(0.45 0.02 265);
+  --destructive: oklch(0.6 0.25 30);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.92 0.01 0);
+  --input: oklch(0.97 0.01 0);
+  --ring: oklch(0.55 0.24 260);
 
-  --accent: oklch(0.78 0.2 80);
-  --accent-foreground: oklch(0.18 0 0);
-
-  /* UI */
-  --muted: oklch(0.94 0.01 260);
-  --muted-foreground: oklch(0.45 0.01 260);
-
-  --destructive: oklch(0.6 0.22 27);
-  --destructive-foreground: oklch(0.98 0 0);
-
-  --border: oklch(0.9 0.01 260);
-  --input: oklch(0.92 0.01 260);
-  --ring: oklch(0.62 0.22 265);
-
-  /* Charts */
-  --chart-1: oklch(0.62 0.22 265);
-  --chart-2: oklch(0.6 0.2 180);
-  --chart-3: oklch(0.78 0.2 80);
-  --chart-4: oklch(0.55 0.22 300);
-  --chart-5: oklch(0.6 0.22 240);
-
-  --radius: 0.75rem;
-
-  /* Sidebar */
-  --sidebar: oklch(0.97 0.01 260);
-  --sidebar-foreground: oklch(0.18 0.01 260);
-  --sidebar-primary: oklch(0.62 0.22 265);
-  --sidebar-primary-foreground: oklch(0.98 0 0);
-  --sidebar-accent: oklch(0.9 0.02 260);
-  --sidebar-accent-foreground: oklch(0.3 0.02 260);
-  --sidebar-border: oklch(0.9 0.01 260);
-  --sidebar-ring: oklch(0.62 0.22 265);
-}
-
-/* ======================================================
-   DARK MODE – Premium / Crypto Feel
-====================================================== */
-.dark {
-  --background: oklch(0.11 0.01 265);
-  --foreground: oklch(0.98 0.01 0);
-
-  --card: oklch(0.17 0.015 265);
-  --card-foreground: oklch(0.97 0 0);
-
-  --popover: oklch(0.14 0.01 265);
-  --popover-foreground: oklch(0.98 0 0);
-
-  --primary: oklch(0.68 0.24 265);
-  --primary-foreground: oklch(0.98 0 0);
-
-  --secondary: oklch(0.67 0.22 180);
-  --secondary-foreground: oklch(0.98 0 0);
-
-  --accent: oklch(0.78 0.2 80);
-  --accent-foreground: oklch(0.15 0 0);
-
-  --muted: oklch(0.22 0.02 265);
-  --muted-foreground: oklch(0.65 0.01 0);
-
-  --destructive: oklch(0.55 0.25 20);
-  --destructive-foreground: oklch(0.98 0 0);
-
-  --border: oklch(0.2 0.015 265);
-  --input: oklch(0.18 0.015 265);
-  --ring: oklch(0.68 0.24 265);
-
-  --chart-1: oklch(0.68 0.24 265);
-  --chart-2: oklch(0.67 0.22 180);
-  --chart-3: oklch(0.78 0.2 80);
+  --chart-1: oklch(0.65 0.25 265);
+  --chart-2: oklch(0.65 0.24 180);
+  --chart-3: oklch(0.75 0.22 80);
   --chart-4: oklch(0.55 0.25 300);
   --chart-5: oklch(0.6 0.24 240);
 
-  --sidebar: oklch(0.14 0.015 265);
+  --radius: 0.75rem;
+
+  --sidebar: oklch(0.12 0.015 265);
   --sidebar-foreground: oklch(0.96 0 0);
-  --sidebar-primary: oklch(0.68 0.24 265);
+  --sidebar-primary: oklch(0.65 0.25 265);
   --sidebar-primary-foreground: oklch(0.98 0 0);
-  --sidebar-accent: oklch(0.2 0.02 265);
+  --sidebar-accent: oklch(0.18 0.02 265);
   --sidebar-accent-foreground: oklch(0.85 0.15 265);
-  --sidebar-border: oklch(0.2 0.015 265);
-  --sidebar-ring: oklch(0.68 0.24 265);
+  --sidebar-border: oklch(0.18 0.015 265);
+  --sidebar-ring: oklch(0.65 0.25 265);
 }
 
-/* ======================================================
-   THEME MAPPING (Tailwind)
-====================================================== */
+.dark {
+  --background: oklch(0.08 0.01 265);
+  --foreground: oklch(0.98 0.01 0);
+  --card: oklch(0.12 0.015 265);
+  --card-foreground: oklch(0.96 0 0);
+  --popover: oklch(0.1 0.01 265);
+  --popover-foreground: oklch(0.98 0 0);
+  --primary: oklch(0.65 0.25 265);
+  --primary-foreground: oklch(0.98 0 0);
+  --secondary: oklch(0.65 0.24 180);
+  --secondary-foreground: oklch(0.98 0 0);
+  --muted: oklch(0.2 0.02 265);
+  --muted-foreground: oklch(0.65 0.01 0);
+  --accent: oklch(0.75 0.22 80);
+  --accent-foreground: oklch(0.15 0 0);
+  --destructive: oklch(0.55 0.25 20);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(0.18 0.015 265);
+  --input: oklch(0.15 0.015 265);
+  --ring: oklch(0.55 0.24 260);
+  --chart-1: oklch(0.65 0.25 265);
+  --chart-2: oklch(0.65 0.24 180);
+  --chart-3: oklch(0.75 0.22 80);
+  --chart-4: oklch(0.55 0.25 300);
+  --chart-5: oklch(0.6 0.24 240);
+  --sidebar: oklch(0.12 0.015 265);
+  --sidebar-foreground: oklch(0.96 0 0);
+  --sidebar-primary: oklch(0.65 0.25 265);
+  --sidebar-primary-foreground: oklch(0.98 0 0);
+  --sidebar-accent: oklch(0.18 0.02 265);
+  --sidebar-accent-foreground: oklch(0.85 0.15 265);
+  --sidebar-border: oklch(0.18 0.015 265);
+  --sidebar-ring: oklch(0.65 0.25 265);
+}
+
 @theme inline {
   --font-sans: "Inter", "Poppins", "DM Sans", sans-serif;
 
@@ -131,16 +107,25 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
 }
 
-/* ======================================================
-   BASE
-====================================================== */
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -150,50 +135,127 @@
   }
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
 body {
   color-scheme: light dark;
   font-feature-settings: "kern" 1, "liga" 1, "rlig" 1, "calt" 1;
   text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* ======================================================
-   COMPONENT STYLES
-====================================================== */
+/* Modern SaaS hero with white background and subtle gradient */
 .gradient-hero {
-  background: linear-gradient(
-    135deg,
-    oklch(0.12 0.01 265),
-    oklch(0.18 0.02 240),
-    oklch(0.12 0.01 265)
-  );
+  background: linear-gradient(135deg, oklch(1 0 0) 0%, oklch(0.98 0.01 260 / 0.5) 100%);
+  position: relative;
+  border-bottom: 1px solid oklch(0.92 0.01 0);
 }
 
-.formula-card {
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: linear-gradient(135deg, var(--card), var(--muted));
+.gradient-hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 20% 50%, oklch(0.55 0.24 260 / 0.05) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.dark .gradient-hero {
+  background: linear-gradient(135deg, oklch(0.08 0.01 265) 0%, oklch(0.1 0.02 240) 50%, oklch(0.12 0.015 200) 100%);
+}
+
+/* Modern SaaS card hover effect */
+.card-hover {
   transition: all 0.3s ease;
 }
 
-.formula-card:hover {
-  border-color: var(--primary);
-  box-shadow: 0 0 30px var(--primary) / 0.15;
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px oklch(0.55 0.24 260 / 0.12);
 }
 
+/* Modern clean card styling */
+.formula-card {
+  position: relative;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: white;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.formula-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, oklch(0.55 0.24 260 / 0.1), transparent);
+}
+
+.formula-card:hover {
+  border-color: oklch(0.88 0.02 0);
+  box-shadow: 0 12px 32px oklch(0.55 0.24 260 / 0.1);
+  transform: translateY(-2px);
+}
+
+/* Crypto badge styling - modern look */
 .crypto-badge {
   display: inline-flex;
+  align-items: center;
   gap: 0.5rem;
   padding: 0.5rem 1rem;
-  border-radius: calc(var(--radius) - 2px);
+  background: linear-gradient(135deg, oklch(0.55 0.24 260 / 0.08) 0%, oklch(0.58 0.22 280 / 0.05) 100%);
+  border: 1px solid oklch(0.55 0.24 260 / 0.15);
+  border-radius: 8px;
+  font-size: 0.875rem;
   font-weight: 600;
-  background: linear-gradient(
-    135deg,
-    oklch(0.78 0.2 80 / 0.15),
-    oklch(0.62 0.22 265 / 0.05)
-  );
-  color: var(--accent);
+  color: var(--primary);
+}
+
+/* Code block styling */
+.formula-code {
+  background: oklch(0.97 0.01 0);
+  border: 1px solid oklch(0.92 0.01 0);
+  border-radius: 10px;
+  padding: 1.5rem;
+  font-family: "Monaco", "Courier New", monospace;
+  font-size: 0.875rem;
+  overflow-x: auto;
+}
+
+.formula-code code {
+  color: var(--primary);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

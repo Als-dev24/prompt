@@ -10,7 +10,7 @@ const packs = [
   {
     id: "starter-pack",
     name: "Starter",
-    price: 29,
+    price: 9,
     packType: "starter",
     description: "Perfect for freelancers and small businesses",
     promptCount: 10,
@@ -30,14 +30,14 @@ const packs = [
   {
     id: "professional-pack",
     name: "Pro",
-    price: 79,
+    price: 19,
     packType: "professional",
     description: "Best for marketing agencies and teams",
-    promptCount: 25,
+    promptCount: 15,
     detailedDescription:
       "Scale your marketing operations with 25+ professional-grade AI prompts covering every aspect of digital marketing. Perfect for agencies managing multiple clients and marketing teams executing complex campaigns.",
     whatYouGet: [
-      "25+ Premium AI Prompts",
+      "15 Premium AI Prompts",
       "Advanced Social Media Strategies",
       "Complete Email Automation",
       "Advanced SEO & Content Marketing",
@@ -46,7 +46,7 @@ const packs = [
       "Monthly Content Updates",
     ],
     features: [
-      "25+ prompts",
+      "15 prompts",
       "Monthly Updates",
       "Exclusive Tools",
       "Priority Support",
@@ -59,10 +59,10 @@ const packs = [
   {
     id: "enterprise-pack",
     name: "Business",
-    price: 199,
+    price: 29,
     packType: "enterprise",
     description: "For large teams and enterprises",
-    promptCount: 50,
+    promptCount: 96,
     detailedDescription:
       "The complete AI marketing arsenal for enterprises and large teams. 50+ prompts covering every marketing channel, strategy, and use case. Build comprehensive multi-channel campaigns with data-driven insights.",
     whatYouGet: [
