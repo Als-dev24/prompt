@@ -7,6 +7,7 @@ import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 import { CartProvider } from "@/lib/cart-context"
 import { Analytics } from "@/components/analytics"
+import Script from "next/script"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -104,6 +105,19 @@ export default function RootLayout({
             }),
           }}
         />
+        <Script
+  src="https://www.googletagmanager.com/gtag/js?id=AW-752135823"
+  strategy="afterInteractive"
+/>
+
+<Script id="google-ads" strategy="afterInteractive">
+  {`
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-752135823');
+  `}
+</Script>
       </head>
       <body className={inter.className}>
         <Suspense fallback={null}>
