@@ -10,7 +10,7 @@ const packs = [
   {
     id: "starter-pack",
     name: "Starter",
-    price: 9,
+    price: 0,
     packType: "starter",
     description: "Perfect for freelancers and small businesses",
     promptCount: 10,
