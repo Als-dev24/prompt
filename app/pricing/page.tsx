@@ -4,7 +4,7 @@ import PricingClient from "./PricingClient"
 export const metadata: Metadata = {
   title: "Pricing & Plans - Premium AI Marketing Prompts | PromptDeal",
   description:
-    "Choose your perfect AI prompt bundle. Starter ($29), Professional ($79), or Enterprise ($199) packs. Pay with crypto, instant delivery, lifetime access.",
+    "Choose your perfect AI prompt bundle. Starter ($0), Professional ($19), or Enterprise ($29) packs. Pay with crypto, instant delivery, lifetime access.",
   keywords: [
     "AI prompts pricing",
     "marketing prompts packages",
