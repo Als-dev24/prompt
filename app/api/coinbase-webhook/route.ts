@@ -1,38 +1,20 @@
 import { type NextRequest, NextResponse } from "next/server"
 import crypto from "crypto"
-import { createAdminClient } from "@/lib/supabase/admin"
+import { adminDb } from "@/lib/firebase/admin"
 
-interface ChargeData {
-  id: string
-  code: string
-  name: string
-  description: string
-  hosted_url: string
-  pricing: {
-    local: { amount: string; currency: string }
-    bitcoin?: { amount: string }
-    ethereum?: { amount: string }
-    usdc?: { amount: string }
-  }
-  metadata?: {
-    promptId?: string
-    items?: string
-    email?: string
+interface NowpaymentsIPNData {
+  payment_id: string
+  invoice_id: string
+  payment_status: string
+  pay_amount: string
+  pay_currency: string
+  order_id: string
+  order_description: string
+  purchase_id: string
+  metadata: {
     packType?: string
-  }
-  timeline: Array<{
-    status: string
-    time: string
-  }>
-}
-
-interface WebhookEvent {
-  id: string
-  scheduled_for: string
-  event: {
-    type: string
-    data: ChargeData
-    created_at: string
+    email?: string
+    items?: string
   }
 }
 
@@ -110,14 +92,14 @@ function verifyWebhookSignature(signature: string | null, body: string): boolean
     return false
   }
 
-  const secret = process.env.COINBASE_WEBHOOK_SECRET
+  const secret = process.env.NOWPAYMENTS_IPN_SECRET
 
   if (!secret) {
-    console.log("[v0] Warning: COINBASE_WEBHOOK_SECRET not set, skipping verification")
+    console.log("[v0] Warning: NOWPAYMENTS_IPN_SECRET not set, skipping verification")
     return true // Allow in development mode
   }
 
-  const hash = crypto.createHmac("sha256", secret).update(body).digest("hex")
+  const hash = crypto.createHash("sha512").update(body + secret).digest("hex")
 
   const isValid = hash === signature
   console.log("[v0] Webhook signature valid:", isValid)
@@ -127,130 +109,117 @@ function verifyWebhookSignature(signature: string | null, body: string): boolean
 
 export async function POST(request: NextRequest) {
   try {
-    const signature = request.headers.get("X-CC-Webhook-Signature")
+    const signature = request.headers.get("x-nowpayments-sig")
     const body = await request.text()
 
-    console.log("[v0] Webhook received")
+    console.log("[v0] Nowpayments IPN received")
 
     if (!verifyWebhookSignature(signature, body)) {
       console.log("[v0] Invalid webhook signature")
       return NextResponse.json({ error: "Invalid signature" }, { status: 401 })
     }
 
-    const webhookData: WebhookEvent = JSON.parse(body)
-    const event = webhookData.event
+    const ipnData: NowpaymentsIPNData = JSON.parse(body)
 
-    console.log("[v0] Webhook event type:", event.type)
+    console.log("[v0] Payment status:", ipnData.payment_status)
 
-    if (event.type === "charge:confirmed") {
-      const { id: chargeId, metadata, pricing, name } = event.data
-      const promptId = metadata?.promptId
-      const itemsData = metadata?.items ? JSON.parse(metadata.items) : null
-      const email = metadata?.email || "unknown@example.com"
-      const packType = metadata?.packType || "cart"
+    if (ipnData.payment_status === "finished") {
+      const paymentId = ipnData.payment_id
+      const email = ipnData.metadata?.email || "unknown@example.com"
+      const packType = ipnData.metadata?.packType || "cart"
+      const itemsData = ipnData.metadata?.items ? JSON.parse(ipnData.metadata.items) : null
 
       console.log("[v0] Payment confirmed:", {
-        chargeId,
+        paymentId,
         email,
         packType,
-        amount: pricing.local.amount,
+        amount: ipnData.pay_amount,
       })
 
-      const supabase = createAdminClient()
+      try {
+        // Use Supabase instead of Firebase
+        const { createClient } = await import("@supabase/supabase-js")
+        const supabase = createClient(
+          process.env.NEXT_PUBLIC_SUPABASE_URL || "",
+          process.env.SUPABASE_SERVICE_ROLE_KEY || ""
+        )
 
-      const { error: insertError } = await supabase.from("orders").insert([
-        {
-          email,
-          charge_id: chargeId,
-          pack_type: packType,
-          amount: Number.parseFloat(pricing.local.amount),
-          payment_status: "paid",
-          download_status: false,
-        },
-      ])
+        const { error } = await supabase.from("orders").insert([
+          {
+            email,
+            charge_id: paymentId,
+            pack_type: packType,
+            amount: parseFloat(ipnData.pay_amount),
+            payment_status: "paid",
+            download_status: false,
+          },
+        ])
 
-      if (insertError) {
-        console.error("[v0] Error inserting order:", insertError)
-        // Continue anyway, order might already exist
-      } else {
-        console.log("[v0] Order inserted successfully")
+        if (error) throw error
+        console.log("[v0] Order created in Supabase successfully")
+      } catch (error) {
+        console.error("[v0] Error creating order:", error)
       }
 
       // Generate download link
-      const downloadUrl = `${new URL(request.url).origin}/api/download/${chargeId}`
+      const downloadUrl = `${new URL(request.url).origin}/api/download/${paymentId}`
 
       // Send confirmation email
-      await sendConfirmationEmail(promptId || "cart", downloadUrl, email, itemsData)
+      await sendConfirmationEmail("", downloadUrl, email, itemsData)
 
       return NextResponse.json({
         received: true,
-        event: "charge:confirmed",
-        chargeId,
+        status: "confirmed",
+        paymentId,
         message: "Payment confirmed successfully",
       })
     }
 
-    if (event.type === "charge:failed") {
-      const { id: chargeId, metadata } = event.data
-      const email = metadata?.email || "unknown@example.com"
+    if (ipnData.payment_status === "failed" || ipnData.payment_status === "expired") {
+      const paymentId = ipnData.payment_id
+      const email = ipnData.metadata?.email || "unknown@example.com"
 
-      console.log("[v0] Payment failed:", { chargeId, email })
+      console.log("[v0] Payment failed/expired:", { paymentId, email })
 
-      const supabase = createAdminClient()
+      try {
+        const { createClient } = await import("@supabase/supabase-js")
+        const supabase = createClient(
+          process.env.NEXT_PUBLIC_SUPABASE_URL || "",
+          process.env.SUPABASE_SERVICE_ROLE_KEY || ""
+        )
 
-      await supabase.from("orders").update({ payment_status: "failed" }).eq("charge_id", chargeId)
-
-      return NextResponse.json({
-        received: true,
-        event: "charge:failed",
-        chargeId,
-      })
-    }
-
-    if (event.type === "charge:pending") {
-      const { id: chargeId } = event.data
-
-      console.log("[v0] Payment pending:", { chargeId })
-
-      const supabase = createAdminClient()
-      const email = event.data.metadata?.email || "unknown@example.com"
-      const packType = event.data.metadata?.packType || "cart"
-
-      await supabase.from("orders").insert([
-        {
-          email,
-          charge_id: chargeId,
-          pack_type: packType,
-          amount: Number.parseFloat(event.data.pricing.local.amount),
-          payment_status: "pending",
-          download_status: false,
-        },
-      ])
+        await supabase
+          .from("orders")
+          .update({ payment_status: "failed" })
+          .eq("charge_id", paymentId)
+      } catch (error) {
+        console.error("[v0] Error updating failed order:", error)
+      }
 
       return NextResponse.json({
         received: true,
-        event: "charge:pending",
-        chargeId,
+        status: "failed",
+        paymentId,
       })
     }
 
-    console.log("[v0] Unhandled event type:", event.type)
+    console.log("[v0] Payment status:", ipnData.payment_status, "- no action needed")
 
     return NextResponse.json({
       received: true,
-      message: "Event logged",
+      message: "IPN logged",
     })
   } catch (error) {
-    console.error("[v0] Webhook processing error:", error)
-    return NextResponse.json({ error: "Webhook processing failed" }, { status: 500 })
+    console.error("[v0] IPN processing error:", error)
+    return NextResponse.json({ error: "IPN processing failed" }, { status: 500 })
   }
 }
 
 export async function GET() {
   return NextResponse.json({
-    message: "PromptDeal Coinbase Commerce Webhook",
-    endpoint: "/api/coinbase-webhook",
-    status: process.env.COINBASE_WEBHOOK_SECRET ? "configured" : "not_configured",
-    supportedEvents: ["charge:confirmed", "charge:failed", "charge:pending"],
+    message: "PromptDeal Nowpayments IPN Webhook",
+    endpoint: "/api/webhook",
+    status: process.env.NOWPAYMENTS_IPN_SECRET ? "configured" : "not_configured",
+    supportedEvents: ["finished", "failed", "expired"],
   })
 }
