@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
     // const { data: order, error } = await supabase
     //   .from('orders')
     //   .select('*')
-    //   .eq('coinbase_checkout_id', chargeId)
+    //   .eq('charge_id', chargeId)
     //   .single();
 
     const mockOrder = {
