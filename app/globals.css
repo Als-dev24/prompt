@@ -51,38 +51,53 @@
 }
 
 .dark {
-  --background: oklch(0.08 0.01 265);
-  --foreground: oklch(0.98 0.01 0);
-  --card: oklch(0.12 0.015 265);
-  --card-foreground: oklch(0.96 0 0);
-  --popover: oklch(0.1 0.01 265);
-  --popover-foreground: oklch(0.98 0 0);
-  --primary: oklch(0.65 0.25 265);
+  /* Sophisticated dark mode - Balanced lightness for eye comfort */
+  --background: oklch(0.12 0.008 265);
+  --foreground: oklch(0.96 0.01 0);
+  --card: oklch(0.18 0.012 265);
+  --card-foreground: oklch(0.95 0.008 0);
+  --popover: oklch(0.16 0.01 265);
+  --popover-foreground: oklch(0.95 0.008 0);
+  
+  /* Enhanced primary colors with better vibrancy */
+  --primary: oklch(0.68 0.28 260);
   --primary-foreground: oklch(0.98 0 0);
-  --secondary: oklch(0.65 0.24 180);
+  --secondary: oklch(0.68 0.26 180);
   --secondary-foreground: oklch(0.98 0 0);
-  --muted: oklch(0.2 0.02 265);
-  --muted-foreground: oklch(0.65 0.01 0);
-  --accent: oklch(0.75 0.22 80);
-  --accent-foreground: oklch(0.15 0 0);
-  --destructive: oklch(0.55 0.25 20);
+  
+  /* Better muted colors for hierarchy */
+  --muted: oklch(0.28 0.01 265);
+  --muted-foreground: oklch(0.72 0.01 0);
+  
+  /* Vibrant accent with good contrast */
+  --accent: oklch(0.78 0.24 80);
+  --accent-foreground: oklch(0.12 0.01 265);
+  
+  /* Improved destructive color */
+  --destructive: oklch(0.62 0.27 30);
   --destructive-foreground: oklch(0.98 0 0);
-  --border: oklch(0.18 0.015 265);
-  --input: oklch(0.15 0.015 265);
-  --ring: oklch(0.55 0.24 260);
-  --chart-1: oklch(0.65 0.25 265);
-  --chart-2: oklch(0.65 0.24 180);
-  --chart-3: oklch(0.75 0.22 80);
-  --chart-4: oklch(0.55 0.25 300);
-  --chart-5: oklch(0.6 0.24 240);
-  --sidebar: oklch(0.12 0.015 265);
-  --sidebar-foreground: oklch(0.96 0 0);
-  --sidebar-primary: oklch(0.65 0.25 265);
+  
+  /* Better borders and inputs */
+  --border: oklch(0.25 0.012 265);
+  --input: oklch(0.2 0.01 265);
+  --ring: oklch(0.68 0.28 260);
+  
+  /* Enhanced chart colors */
+  --chart-1: oklch(0.68 0.28 265);
+  --chart-2: oklch(0.68 0.26 180);
+  --chart-3: oklch(0.78 0.24 80);
+  --chart-4: oklch(0.62 0.27 300);
+  --chart-5: oklch(0.68 0.26 240);
+  
+  /* Sidebar styling */
+  --sidebar: oklch(0.15 0.01 265);
+  --sidebar-foreground: oklch(0.95 0.008 0);
+  --sidebar-primary: oklch(0.68 0.28 265);
   --sidebar-primary-foreground: oklch(0.98 0 0);
-  --sidebar-accent: oklch(0.18 0.02 265);
-  --sidebar-accent-foreground: oklch(0.85 0.15 265);
-  --sidebar-border: oklch(0.18 0.015 265);
-  --sidebar-ring: oklch(0.65 0.25 265);
+  --sidebar-accent: oklch(0.25 0.012 265);
+  --sidebar-accent-foreground: oklch(0.88 0.18 265);
+  --sidebar-border: oklch(0.25 0.012 265);
+  --sidebar-ring: oklch(0.68 0.28 265);
 }
 
 @theme inline {
@@ -145,9 +160,9 @@ body {
 
 /* Modern SaaS hero with white background and subtle gradient */
 .gradient-hero {
-  background: linear-gradient(135deg, oklch(1 0 0) 0%, oklch(0.98 0.01 260 / 0.5) 100%);
+  background: linear-gradient(135deg, var(--background) 0%, var(--card) 100%);
   position: relative;
-  border-bottom: 1px solid oklch(0.92 0.01 0);
+  border-bottom: 1px solid var(--border);
 }
 
 .gradient-hero::before {
@@ -161,8 +176,8 @@ body {
   pointer-events: none;
 }
 
-.dark .gradient-hero {
-  background: linear-gradient(135deg, oklch(0.08 0.01 265) 0%, oklch(0.1 0.02 240) 50%, oklch(0.12 0.015 200) 100%);
+.dark .gradient-hero::before {
+  background: radial-gradient(circle at 20% 50%, oklch(0.68 0.28 265 / 0.15) 0%, transparent 50%);
 }
 
 /* Modern SaaS card hover effect */
@@ -172,7 +187,11 @@ body {
 
 .card-hover:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 24px oklch(0.55 0.24 260 / 0.12);
+  box-shadow: 0 8px 24px var(--primary) / 12%;
+}
+
+.dark .card-hover:hover {
+  box-shadow: 0 8px 24px var(--primary) / 25%;
 }
 
 /* Modern clean card styling */
@@ -180,7 +199,8 @@ body {
   position: relative;
   border: 1px solid var(--border);
   border-radius: 12px;
-  background: white;
+  background: var(--card);
+  color: var(--card-foreground);
   transition: all 0.3s ease;
   overflow: hidden;
 }
@@ -196,9 +216,14 @@ body {
 }
 
 .formula-card:hover {
-  border-color: oklch(0.88 0.02 0);
+  border-color: var(--primary);
   box-shadow: 0 12px 32px oklch(0.55 0.24 260 / 0.1);
   transform: translateY(-2px);
+}
+
+.dark .formula-card:hover {
+  box-shadow: 0 12px 32px oklch(0.68 0.28 265 / 0.25);
+  border-color: var(--primary);
 }
 
 /* Crypto badge styling - modern look */
@@ -207,8 +232,8 @@ body {
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem 1rem;
-  background: linear-gradient(135deg, oklch(0.55 0.24 260 / 0.08) 0%, oklch(0.58 0.22 280 / 0.05) 100%);
-  border: 1px solid oklch(0.55 0.24 260 / 0.15);
+  background: linear-gradient(135deg, var(--primary) / 8% 0%, var(--primary) / 5% 100%);
+  border: 1px solid var(--primary) / 15%;
   border-radius: 8px;
   font-size: 0.875rem;
   font-weight: 600;
@@ -217,13 +242,14 @@ body {
 
 /* Code block styling */
 .formula-code {
-  background: oklch(0.97 0.01 0);
-  border: 1px solid oklch(0.92 0.01 0);
+  background: var(--input);
+  border: 1px solid var(--border);
   border-radius: 10px;
   padding: 1.5rem;
   font-family: "Monaco", "Courier New", monospace;
   font-size: 0.875rem;
   overflow-x: auto;
+  color: var(--foreground);
 }
 
 .formula-code code {
@@ -232,6 +258,12 @@ body {
 
 html {
   scroll-behavior: smooth;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Enhanced dark mode visibility */
+.dark {
+  color-scheme: dark;
 }
 
 .sr-only {

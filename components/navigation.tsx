@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Menu, X, ShoppingCart } from "lucide-react"
+import { Menu, X, ShoppingCart, Moon, Sun } from "lucide-react"
 import { useCart } from "@/lib/cart-context"
 import { CartDrawer } from "@/components/cart-drawer"
 
@@ -11,6 +11,7 @@ export function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [cartOpen, setCartOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [darkMode, setDarkMode] = useState(false)
   const { itemCount } = useCart()
 
   useEffect(() => {
@@ -20,6 +21,11 @@ export function Navigation() {
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
+
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode)
+    document.documentElement.classList.toggle("dark")
+  }
 
   return (
     <>
@@ -49,27 +55,41 @@ export function Navigation() {
               {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
 
-            {/* Desktop Links */}
             <div className="hidden md:flex items-center gap-8">
               <Link href="/" className="text-sm font-medium text-muted-foreground hover:text-foreground transition">
                 Home
               </Link>
-              <Link href="/pricing" className="text-sm font-medium text-muted-foreground hover:text-foreground transition">
+              <Link
+                href="/pricing"
+                className="text-sm font-medium text-muted-foreground hover:text-foreground transition"
+              >
                 Prompts
               </Link>
-              <Link href="/tools" className="text-sm font-medium text-muted-foreground hover:text-foreground transition">
+              <Link
+                href="/tools"
+                className="text-sm font-medium text-muted-foreground hover:text-foreground transition"
+              >
                 Tools
               </Link>
               <Link href="/blog" className="text-sm font-medium text-muted-foreground hover:text-foreground transition">
                 Blog
               </Link>
-              <Link href="/pricing" className="text-sm font-medium text-muted-foreground hover:text-foreground transition">
+              <Link
+                href="/pricing"
+                className="text-sm font-medium text-muted-foreground hover:text-foreground transition"
+              >
                 Pricing
               </Link>
             </div>
 
-            {/* Desktop Right Side */}
             <div className="hidden md:flex items-center gap-3">
+              <button
+                onClick={toggleDarkMode}
+                className="p-2 hover:bg-muted rounded-lg transition"
+                aria-label="Toggle dark mode"
+              >
+                {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+              </button>
               <button
                 onClick={() => setCartOpen(true)}
                 className="relative p-2 hover:bg-muted rounded-lg transition"
@@ -92,22 +112,50 @@ export function Navigation() {
           {mobileMenuOpen && (
             <div className="md:hidden py-4 border-t border-border">
               <div className="flex flex-col space-y-3">
-                <Link href="/" className="text-base font-medium text-muted-foreground hover:text-foreground transition px-2 py-2 rounded-lg hover:bg-muted" onClick={() => setMobileMenuOpen(false)}>
+                <Link
+                  href="/"
+                  className="text-base font-medium text-muted-foreground hover:text-foreground transition px-2 py-2 rounded-lg hover:bg-muted"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
                   Home
                 </Link>
-                <Link href="/pricing" className="text-base font-medium text-muted-foreground hover:text-foreground transition px-2 py-2 rounded-lg hover:bg-muted" onClick={() => setMobileMenuOpen(false)}>
+                <Link
+                  href="/pricing"
+                  className="text-base font-medium text-muted-foreground hover:text-foreground transition px-2 py-2 rounded-lg hover:bg-muted"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
                   Prompts
                 </Link>
-                <Link href="/tools" className="text-base font-medium text-muted-foreground hover:text-foreground transition px-2 py-2 rounded-lg hover:bg-muted" onClick={() => setMobileMenuOpen(false)}>
+                <Link
+                  href="/tools"
+                  className="text-base font-medium text-muted-foreground hover:text-foreground transition px-2 py-2 rounded-lg hover:bg-muted"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
                   Tools
                 </Link>
-                <Link href="/blog" className="text-base font-medium text-muted-foreground hover:text-foreground transition px-2 py-2 rounded-lg hover:bg-muted" onClick={() => setMobileMenuOpen(false)}>
+                <Link
+                  href="/blog"
+                  className="text-base font-medium text-muted-foreground hover:text-foreground transition px-2 py-2 rounded-lg hover:bg-muted"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
                   Blog
                 </Link>
-                <Link href="/pricing" className="text-base font-medium text-muted-foreground hover:text-foreground transition px-2 py-2 rounded-lg hover:bg-muted" onClick={() => setMobileMenuOpen(false)}>
+                <Link
+                  href="/pricing"
+                  className="text-base font-medium text-muted-foreground hover:text-foreground transition px-2 py-2 rounded-lg hover:bg-muted"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
                   Pricing
                 </Link>
-
+                <div className="flex items-center gap-2 px-2 py-2">
+                  <button
+                    onClick={toggleDarkMode}
+                    className="p-2 hover:bg-muted rounded-lg transition"
+                    aria-label="Toggle dark mode"
+                  >
+                    {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+                  </button>
+                </div>
                 <button
                   onClick={() => {
                     setMobileMenuOpen(false)
@@ -122,7 +170,6 @@ export function Navigation() {
                     </span>
                   )}
                 </button>
-
                 <Link href="/pricing" onClick={() => setMobileMenuOpen(false)}>
                   <Button className="w-full mt-2 rounded-xl">Get Prompts</Button>
                 </Link>

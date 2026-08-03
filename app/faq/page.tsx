@@ -33,7 +33,7 @@ export default function FAQPage() {
     {
       question: "What cryptocurrencies do you accept?",
       answer:
-        "We accept Bitcoin (BTC), Ethereum (ETH), USDC, Solana (SOL), and other major cryptocurrencies through Coinbase Commerce. All payments are secure and instant.",
+        "We accept Bitcoin (BTC), Ethereum (ETH), USDC, Solana (SOL), and other major cryptocurrencies through NOWPayments. All payments are secure and instant.",
     },
     {
       question: "Can I get a refund?",

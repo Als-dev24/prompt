@@ -24,20 +24,30 @@ export default function CheckoutPage() {
   }, [])
 
   useEffect(() => {
-    if (mounted && items.length === 0) {
-      router.push("/pricing")
-    }
-    if (mounted && items.length > 0) {
-      trackBeginCheckout(total)
-    }
-  }, [mounted, items.length, router, total])
+    if (!mounted) return
+
+    console.log("[v0] Checkout mounted - checking cart. Items:", items.length, "Total:", total)
+
+    // Give cart context time to load from localStorage
+    const timer = setTimeout(() => {
+      if (items.length === 0) {
+        console.log("[v0] No items in cart after 300ms, redirecting to pricing")
+        router.push("/pricing")
+      } else {
+        console.log("[v0] Cart loaded with", items.length, 'items')
+        trackBeginCheckout(total)
+      }
+    }, 300)
+
+    return () => clearTimeout(timer)
+  }, [mounted, router, total, items])
 
   if (!mounted || items.length === 0) {
     return (
       <main className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-          <p className="text-muted-foreground">Loading checkout...</p>
+          <p className="text-muted-foreground">Loading your cart...</p>
         </div>
       </main>
     )
@@ -100,9 +110,9 @@ export default function CheckoutPage() {
         throw new Error(data.message || "Failed to create checkout")
       }
 
-      if (data.mode === "production" && data.hostedUrl) {
-        console.log("[v0] Redirecting to Coinbase Commerce...")
-        window.location.href = data.hostedUrl
+      if (data.mode === "production" && data.paymentLink) {
+        console.log("[v0] Redirecting to Nowpayments...")
+        window.location.href = data.paymentLink
         return
       }
 
@@ -270,7 +280,7 @@ export default function CheckoutPage() {
                   </div>
                   <div className="flex items-center gap-2 text-sm text-muted-foreground">
                     <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                    <span>Secure payment via Coinbase</span>
+                    <span>Secure crypto payment</span>
                   </div>
                 </div>
               </CardContent>

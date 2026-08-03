@@ -7,14 +7,16 @@ CREATE TABLE IF NOT EXISTS public.products (
   price DECIMAL(10, 2) NOT NULL,
   pack_type TEXT NOT NULL CHECK (pack_type IN ('starter', 'professional', 'enterprise')),
   prompt_content TEXT NOT NULL,
+  zip_path TEXT COMMENT 'Path to ZIP file in Supabase Storage: packs/{pack_type}/{version}/{filename}.zip',
   is_active BOOLEAN DEFAULT true,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- Create index for faster queries
+-- Create indexes for faster queries
 CREATE INDEX IF NOT EXISTS idx_products_pack_type ON public.products(pack_type);
 CREATE INDEX IF NOT EXISTS idx_products_category ON public.products(category);
+CREATE INDEX IF NOT EXISTS idx_products_zip_path ON public.products(zip_path);
 
 -- Enable RLS for security
 ALTER TABLE public.products ENABLE ROW LEVEL SECURITY;

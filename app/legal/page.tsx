@@ -46,7 +46,7 @@ export default function LegalPage() {
             <section>
               <h2 className="text-2xl font-bold text-foreground mb-4">3. Payment and Refunds</h2>
               <p className="text-muted-foreground leading-relaxed">
-                All payments are processed through Coinbase Commerce in cryptocurrency. Due to the instant digital
+                All payments are processed through NOWPayments in cryptocurrency. Due to the instant digital
                 delivery nature of our products, all sales are final. We do not offer refunds except in cases of
                 technical errors preventing download access.
               </p>

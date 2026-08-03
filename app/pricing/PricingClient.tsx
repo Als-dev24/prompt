@@ -10,9 +10,9 @@ const packs = [
   {
     id: "starter-pack",
     name: "Starter",
-    price: 0,
+    price: 9,
     packType: "starter",
-    description: "Perfect for freelancers and small businesses",
+    description: "Free - Perfect for testing and getting started",
     promptCount: 10,
     detailedDescription:
       "Kickstart your digital marketing journey with 10 carefully curated AI prompts designed for freelancers and small businesses. Get instant access to proven templates that generate engaging social media content, compelling email campaigns, and SEO-optimized copy.",
@@ -31,13 +31,13 @@ const packs = [
     id: "professional-pack",
     name: "Pro",
     price: 19,
-    packType: "professional",
+    packType: "pro",
     description: "Best for marketing agencies and teams",
-    promptCount: 15,
+    promptCount: 25,
     detailedDescription:
       "Scale your marketing operations with 25+ professional-grade AI prompts covering every aspect of digital marketing. Perfect for agencies managing multiple clients and marketing teams executing complex campaigns.",
     whatYouGet: [
-      "15 Premium AI Prompts",
+      "25+ Premium AI Prompts",
       "Advanced Social Media Strategies",
       "Complete Email Automation",
       "Advanced SEO & Content Marketing",
@@ -46,7 +46,7 @@ const packs = [
       "Monthly Content Updates",
     ],
     features: [
-      "15 prompts",
+      "25+ prompts",
       "Monthly Updates",
       "Exclusive Tools",
       "Priority Support",
@@ -60,9 +60,9 @@ const packs = [
     id: "enterprise-pack",
     name: "Business",
     price: 29,
-    packType: "enterprise",
+    packType: "business",
     description: "For large teams and enterprises",
-    promptCount: 96,
+    promptCount: 50,
     detailedDescription:
       "The complete AI marketing arsenal for enterprises and large teams. 50+ prompts covering every marketing channel, strategy, and use case. Build comprehensive multi-channel campaigns with data-driven insights.",
     whatYouGet: [
@@ -214,7 +214,7 @@ export default function PricingClient() {
           <div className="mt-20 text-center max-w-4xl mx-auto">
             <h2 className="text-3xl font-bold mb-6">Secure Crypto Payments Only</h2>
             <p className="text-muted-foreground mb-8 text-lg">
-              We accept Bitcoin, Ethereum, USDC, Solana and other cryptocurrencies via Coinbase Commerce. Fast, secure,
+              We accept Bitcoin, Ethereum, USDC, Solana and other cryptocurrencies via NOWPayments. Fast, secure,
               and private transactions.
             </p>
 

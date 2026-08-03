@@ -7,7 +7,7 @@ import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 import { CartProvider } from "@/lib/cart-context"
 import { Analytics } from "@/components/analytics"
-import Script from "next/script"
+import { ThemeProvider } from "@/components/theme-provider"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -69,6 +69,7 @@ export const metadata: Metadata = {
   verification: {
     google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
   },
+    generator: 'v0.app'
 }
 
 export const viewport: Viewport = {
@@ -88,46 +89,18 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="canonical" href="https://promptdeal.store" />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "WebSite",
-              name: "PromptDeal",
-              url: "https://promptdeal.store",
-              description: "Premium AI prompts marketplace for marketing and content creation",
-              potentialAction: {
-                "@type": "SearchAction",
-                target: "https://promptdeal.store/search?q={search_term_string}",
-                "query-input": "required name=search_term_string",
-              },
-            }),
-          }}
-        />
-        <Script
-  src="https://www.googletagmanager.com/gtag/js?id=AW-752135823"
-  strategy="afterInteractive"
-/>
-
-<Script id="google-ads" strategy="afterInteractive">
-  {`
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'AW-752135823');
-  `}
-</Script>
       </head>
       <body className={inter.className}>
-        <Suspense fallback={null}>
-          <Analytics />
-        </Suspense>
-        <CartProvider>
-          <Navigation />
-          <main id="main-content">{children}</main>
-          <Footer />
-        </CartProvider>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem enableColorScheme disableTransitionOnChange>
+          <Suspense fallback={null}>
+            <Analytics />
+          </Suspense>
+          <CartProvider>
+            <Navigation />
+            <main id="main-content">{children}</main>
+            <Footer />
+          </CartProvider>
+        </ThemeProvider>
       </body>
     </html>
   )

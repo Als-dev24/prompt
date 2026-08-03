@@ -96,7 +96,7 @@ export function Footer() {
 
         <div className="border-t border-background/20 pt-8 text-center">
           <p className="text-sm text-background/60">
-            © 2025 PromptDeal. All rights reserved. Secure cryptocurrency payments powered by Coinbase Commerce.
+            © 2025 PromptDeal. All rights reserved. Secure cryptocurrency payments powered by NOWPayments.
           </p>
         </div>
       </div>

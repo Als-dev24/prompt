@@ -15,7 +15,7 @@ const formulas = [
 ]
 
 const formulas_features = [
-  { icon: Shield, title: "Secure Crypto Payment", description: "Coinbase Commerce - Instant delivery after payment" },
+  { icon: Shield, title: "Secure Crypto Payment", description: "NOWPayments - Instant delivery after payment" },
   { icon: Unlock, title: "Unlock Formulas", description: "Activate powerful AI commands instantly" },
   { icon: Zap, title: "Battle-Tested", description: "Used by 10,000+ marketing professionals" },
   { icon: Star, title: "Lifetime Access", description: "Download your prompts once, use forever" },
@@ -32,7 +32,7 @@ export default function Home() {
 
   return (
     <>
-      {/* Hero - Secret Formula Reveal */}
+      {/* Hero - Modern SaaS Style */}
       <section className="relative px-4 py-20 sm:py-32 lg:py-48 sm:px-6 lg:px-8 gradient-hero overflow-hidden min-h-screen flex items-center">
         <div className="max-w-7xl mx-auto w-full">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
@@ -44,13 +44,12 @@ export default function Home() {
                   <span className="text-sm font-medium text-accent">EXCLUSIVE • CRYPTO ONLY • INSTANT DELIVERY</span>
                 </div>
 
-                <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-accent leading-tight tracking-tighter">
-                  Unlock The Digital Formula
+                <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-accent leading-tight tracking-tighter">
+                  Powerful AI Prompts for Your Marketing
                 </h1>
 
                 <p className="text-xl sm:text-2xl text-muted-foreground max-w-2xl leading-relaxed">
-                  Powerful AI prompts crafted by elite marketers. Activate them instantly. Transform your marketing
-                  forever.
+                  Pre-crafted prompts designed by top marketers. Copy, paste, and get results instantly. No fluff, just pure marketing power.
                 </p>
               </div>
 
@@ -75,20 +74,20 @@ export default function Home() {
                 </Button>
               </div>
 
-              <div className="space-y-2 pt-4">
-                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Trust Indicators</p>
+              <div className="space-y-3 pt-4">
+                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Why Choose Us</p>
                 <div className="space-y-2">
                   <div className="flex items-center gap-3">
-                    <Check className="w-5 h-5 text-secondary flex-shrink-0" />
-                    <span className="text-foreground">500+ Battle-Tested Prompts</span>
+                    <Check className="w-5 h-5 text-primary flex-shrink-0" />
+                    <span className="text-foreground text-sm">500+ battle-tested prompts</span>
                   </div>
                   <div className="flex items-center gap-3">
-                    <Check className="w-5 h-5 text-secondary flex-shrink-0" />
-                    <span className="text-foreground">Instant Crypto Payment • Same-Day Delivery</span>
+                    <Check className="w-5 h-5 text-primary flex-shrink-0" />
+                    <span className="text-foreground text-sm">Instant crypto checkout • Same-day delivery</span>
                   </div>
                   <div className="flex items-center gap-3">
-                    <Check className="w-5 h-5 text-secondary flex-shrink-0" />
-                    <span className="text-foreground">Lifetime Access • No Subscriptions</span>
+                    <Check className="w-5 h-5 text-primary flex-shrink-0" />
+                    <span className="text-foreground text-sm">Lifetime access • No subscriptions</span>
                   </div>
                 </div>
               </div>
@@ -141,15 +140,15 @@ export default function Home() {
         </div>
       </section>
 
-      {/* How It Works - Copy Paste Activate */}
-      <section className="px-4 py-20 sm:py-24 sm:px-6 lg:px-8 bg-card/50 border-t border-border">
+      {/* How It Works */}
+      <section className="px-4 py-20 sm:py-24 sm:px-6 lg:px-8 bg-white border-t border-border">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-foreground mb-6">
-              The Ritual: Copy → Paste → Activate → Result
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground dark:text-white mb-6">
+              How It Works
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Simple 4-step process to harness the power of AI formulas
+            <p className="text-lg text-muted-foreground dark:text-gray-300 max-w-2xl mx-auto">
+              Simple 4-step process to unlock AI-powered marketing success
             </p>
           </div>
 
@@ -162,9 +161,9 @@ export default function Home() {
                     <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-xl">
                       <Icon className={`w-8 h-8 ${formula.color}`} />
                     </div>
-                    <h3 className="text-2xl font-bold text-foreground">Step {index + 1}</h3>
-                    <p className="text-lg font-semibold text-foreground">{formula.title}</p>
-                    <p className="text-muted-foreground text-sm">{formula.description}</p>
+                    <h3 className="text-2xl font-bold text-foreground dark:text-white">Step {index + 1}</h3>
+                    <p className="text-lg font-semibold text-foreground dark:text-white">{formula.title}</p>
+                    <p className="text-muted-foreground dark:text-gray-300 text-sm">{formula.description}</p>
                   </div>
                   {index < formulas.length - 1 && (
                     <div className="hidden lg:flex absolute -right-3 top-1/2 -translate-y-1/2 items-center justify-center w-6 h-6 bg-background border border-border rounded-full z-10">
@@ -179,11 +178,11 @@ export default function Home() {
       </section>
 
       {/* Features Grid */}
-      <section className="px-4 py-20 sm:py-24 sm:px-6 lg:px-8">
+      <section className="px-4 py-20 sm:py-24 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-foreground mb-6">Why Choose PromptDeal?</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground dark:text-white mb-6">Why Choose PromptDeal?</h2>
+            <p className="text-lg text-muted-foreground dark:text-gray-300 max-w-2xl mx-auto">
               Everything you need to master AI-powered marketing
             </p>
           </div>
@@ -199,8 +198,8 @@ export default function Home() {
                         <Icon className="w-7 h-7 text-primary" />
                       </div>
                       <div className="flex-1">
-                        <h3 className="text-xl font-bold text-foreground mb-2">{feature.title}</h3>
-                        <p className="text-muted-foreground">{feature.description}</p>
+                        <h3 className="text-xl font-bold text-foreground dark:text-white mb-2">{feature.title}</h3>
+                        <p className="text-muted-foreground dark:text-gray-300">{feature.description}</p>
                       </div>
                     </div>
                   </CardContent>
@@ -217,16 +216,16 @@ export default function Home() {
       {/* Newsletter CTA */}
       <section
         id="newsletter-section"
-        className="px-4 py-20 sm:py-24 sm:px-6 lg:px-8 bg-card/50 border-t border-b border-border"
+        className="px-4 py-20 sm:py-24 sm:px-6 lg:px-8 bg-gradient-to-b from-blue-50 to-white border-t border-border"
       >
         <div className="max-w-4xl mx-auto">
-          <Card className="formula-card border-primary/20">
+          <Card className="formula-card border-primary/15">
             <CardContent className="p-12 sm:p-16 text-center space-y-8">
               <div className="space-y-4">
-                <Unlock className="w-16 h-16 text-accent mx-auto" />
-                <h2 className="text-3xl sm:text-4xl font-black text-foreground">Download 50 Free Marketing Prompts</h2>
-                <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                  Unlock instant access to our starter formula pack. No credit card required. Crypto or email.
+                <Unlock className="w-16 h-16 text-primary mx-auto" />
+                <h2 className="text-3xl sm:text-4xl font-bold text-foreground dark:text-white">Get 50 Free Prompts</h2>
+                <p className="text-lg text-muted-foreground dark:text-gray-300 max-w-2xl mx-auto">
+                  Start free with our starter pack. No credit card required.
                 </p>
               </div>
               <NewsletterForm />
@@ -235,85 +234,15 @@ export default function Home() {
         </div>
       </section>
 
-{/* Free Tools Preview */}
-<section className="px-4 py-20 sm:py-24 sm:px-6 lg:px-8 bg-card/40 border-t border-border">
-  <div className="max-w-6xl mx-auto">
-    <div className="text-center mb-16">
-      <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-foreground mb-6">
-        Free AI Tools – Try Before You Upgrade
-      </h2>
-      <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-        No fake reviews. Just real tools you can use right now.
-      </p>
-    </div>
-
-    {/* Tools Preview */}
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-      <Card className="formula-card border-border/50 hover:border-primary/50 transition">
-        <CardContent className="p-8 space-y-4">
-          <h3 className="text-2xl font-bold text-foreground">
-            AI Title Generator
-          </h3>
-          <p className="text-muted-foreground">
-            Generate catchy headlines that grab attention and drive clicks.
-          </p>
-          <Link
-            href="/tools"
-            className="inline-flex items-center text-primary font-semibold"
-          >
-            Try it free <ArrowRight className="ml-2 w-4 h-4" />
-          </Link>
-        </CardContent>
-      </Card>
-
-      <Card className="formula-card border-border/50 hover:border-primary/50 transition">
-        <CardContent className="p-8 space-y-4">
-          <h3 className="text-2xl font-bold text-foreground">
-            Hashtag Generator
-          </h3>
-          <p className="text-muted-foreground">
-            Discover trending hashtags to boost reach and engagement.
-          </p>
-          <Link
-            href="/tools"
-            className="inline-flex items-center text-primary font-semibold"
-          >
-            Try it free <ArrowRight className="ml-2 w-4 h-4" />
-          </Link>
-        </CardContent>
-      </Card>
-    </div>
-
-    {/* More tools CTA */}
-    <div className="mt-16 text-center">
-      <p className="text-sm text-muted-foreground mb-6">
-        More free tools available — no signup required.
-      </p>
-      <Link href="/tools">
-        <Button
-          size="lg"
-          variant="outline"
-          className="rounded-xl border-primary/30 bg-transparent"
-        >
-          More Free Tools
-          <ArrowRight className="ml-2 w-5 h-5" />
-        </Button>
-      </Link>
-    </div>
-  </div>
-</section>
-
-
-
       {/* Final CTA */}
-      <section className="px-4 py-20 sm:py-32 sm:px-6 lg:px-8 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-secondary/5 pointer-events-none" />
+      <section className="px-4 py-20 sm:py-32 sm:px-6 lg:px-8 relative overflow-hidden bg-white">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/3 via-transparent to-secondary/3 pointer-events-none" />
         <div className="max-w-4xl mx-auto text-center relative z-10">
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary mb-6">
-            Ready to Unlock Your Formula?
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary dark:from-blue-400 dark:to-cyan-400 mb-6">
+            Ready to Get Started?
           </h2>
-          <p className="text-lg sm:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto">
-            Join 10,000+ marketing professionals using PromptDeal formulas to dominate their market
+          <p className="text-lg sm:text-xl text-muted-foreground dark:text-gray-300 mb-10 max-w-2xl mx-auto">
+            Join 10,000+ marketing professionals using PromptDeal to grow their business
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
             <Link href="/pricing">
@@ -335,8 +264,8 @@ export default function Home() {
             </Button>
           </div>
 
-          <div className="pt-8 border-t border-border/30">
-            <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-4">
+          <div className="pt-8 border-t border-border/30 dark:border-border">
+            <p className="text-sm font-semibold text-muted-foreground dark:text-gray-300 uppercase tracking-wider mb-4">
               Secure Crypto Payments
             </p>
             <div className="flex flex-wrap justify-center gap-8 sm:gap-12">
@@ -360,77 +289,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-	  
-	  {/* Contact Us */}
-<section className="px-4 py-20 sm:py-24 sm:px-6 lg:px-8 bg-card/50 border-t border-border">
-  <div className="max-w-3xl mx-auto">
-    <Card className="formula-card border-border">
-      <CardContent className="p-10 sm:p-14 space-y-8">
-        <div className="text-center">
-          <h2 className="text-3xl sm:text-4xl font-black text-foreground mb-4">
-            Contact Us
-          </h2>
-          <p className="text-muted-foreground">
-            Have a question or need help? Send us a message.
-          </p>
-        </div>
-
-        <form
-          className="space-y-6"
-          onSubmit={async (e) => {
-            e.preventDefault()
-            const form = e.currentTarget
-            const email = form.email.value
-            const message = form.message.value
-
-            await fetch("/api/contact", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ email, message }),
-            })
-
-            form.reset()
-            alert("Message sent successfully ✅")
-          }}
-        >
-          <div className="space-y-2">
-            <label className="text-sm font-medium">Your Email</label>
-            <input
-              type="email"
-              name="email"
-              required
-              className="w-full rounded-xl border border-border bg-background p-3"
-              placeholder="you@email.com"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <label className="text-sm font-medium">Message</label>
-            <textarea
-              name="message"
-              required
-              maxLength={1000}
-              className="w-full min-h-[150px] rounded-xl border border-border bg-background p-3"
-              placeholder="Write your message (max 1000 characters)"
-            />
-            <p className="text-xs text-muted-foreground text-right">
-              Max 1000 characters
-            </p>
-          </div>
-
-          <Button
-            type="submit"
-            size="lg"
-            className="w-full rounded-xl bg-gradient-to-r from-primary to-secondary"
-          >
-            Send Message
-          </Button>
-        </form>
-      </CardContent>
-    </Card>
-  </div>
-</section>
-
     </>
   )
 }

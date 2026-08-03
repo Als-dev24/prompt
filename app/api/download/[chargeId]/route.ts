@@ -47,8 +47,8 @@ export async function GET(request: NextRequest, { params }: DownloadParams) {
     console.log("[DOWNLOAD] Found product:", product.name, "with zip:", product.zip_path)
 
     const { data: signedUrlData, error: signedUrlError } = await supabase.storage
-      .from("prompt-packs")
-      .createSignedUrl(product.zip_path, 3600)
+      .from("packs")
+      .createSignedUrl(product.zip_path, 360)
 
     if (signedUrlError || !signedUrlData) {
       console.error("[DOWNLOAD] Error generating signed URL:", signedUrlError)

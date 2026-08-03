@@ -39,7 +39,7 @@ export default function PrivacyPage() {
               <p className="text-muted-foreground leading-relaxed mb-4">We collect the following information:</p>
               <ul className="list-disc list-inside text-muted-foreground space-y-2 ml-4">
                 <li>Email address for order confirmation and newsletter subscriptions</li>
-                <li>Payment information processed securely through Coinbase Commerce</li>
+                <li>Payment information processed securely through NOWPayments</li>
                 <li>Usage data and analytics to improve our service</li>
                 <li>Browser and device information for security and optimization</li>
               </ul>
@@ -62,7 +62,7 @@ export default function PrivacyPage() {
               <h2 className="text-2xl font-bold text-foreground mb-4">3. Data Security</h2>
               <p className="text-muted-foreground leading-relaxed">
                 We implement industry-standard security measures to protect your personal information. All payment
-                processing is handled securely through Coinbase Commerce. We do not store credit card or cryptocurrency
+                processing is handled securely through NOWPayments. We do not store credit card or cryptocurrency
                 wallet information on our servers.
               </p>
             </section>
@@ -71,7 +71,7 @@ export default function PrivacyPage() {
               <h2 className="text-2xl font-bold text-foreground mb-4">4. Third-Party Services</h2>
               <p className="text-muted-foreground leading-relaxed mb-4">We use the following third-party services:</p>
               <ul className="list-disc list-inside text-muted-foreground space-y-2 ml-4">
-                <li>Coinbase Commerce for cryptocurrency payment processing</li>
+                <li>NOWPayments for cryptocurrency payment processing</li>
                 <li>Resend for transactional email delivery</li>
                 <li>Vercel for website hosting and analytics</li>
               </ul>

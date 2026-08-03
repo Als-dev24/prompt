@@ -24,10 +24,8 @@ yarn-debug.log*
 yarn-error.log*
 
 # Local env files
+.env*.local
 .env
-.env.local
-.env.*
-
 
 # Vercel
 .vercel
@@ -50,4 +48,3 @@ logs
 # Lock files (keep pnpm-lock.yaml but ignore others)
 package-lock.json
 yarn.lock
-"env.local" 

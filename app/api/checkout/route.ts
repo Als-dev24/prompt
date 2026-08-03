@@ -74,15 +74,12 @@ export async function POST(request: NextRequest) {
       price_amount: parseFloat(numPrice.toFixed(2)),
       price_currency: "usd",
       order_id: promptId || `order_${Date.now()}`,
-      order_description: items ? `Purchase of ${items.length} premium AI prompts` : `Premium AI Prompt: ${title}`,
+      order_description: items 
+        ? `Purchase of ${items.length} premium AI prompts | Email: ${email}` 
+        : `Premium AI Prompt: ${title} | Email: ${email}`,
       ipn_callback_url: new URL("/api/webhook", request.url).toString(),
       success_url: new URL("/confirmation", request.url).toString(),
       cancel_url: new URL("/checkout", request.url).toString(),
-      metadata: {
-        packType: packType || "cart",
-        email: email,
-        items: items ? JSON.stringify(items) : undefined,
-      },
     }
 
     console.log("[v0] Sending to Nowpayments:", requestBody)

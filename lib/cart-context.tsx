@@ -17,24 +17,39 @@ interface CartContextType {
   clearCart: () => void
   total: number
   itemCount: number
+  isReady: boolean
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined)
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([])
+  const [isReady, setIsReady] = useState(false)
 
   // Load cart from localStorage on mount
   useEffect(() => {
+    console.log("[v0] Cart provider mounting, loading from localStorage...")
     const savedCart = localStorage.getItem("promptdeal-cart")
+    console.log("[v0] Saved cart from localStorage:", savedCart)
     if (savedCart) {
-      setItems(JSON.parse(savedCart))
+      try {
+        const parsedCart = JSON.parse(savedCart)
+        console.log("[v0] Parsed cart items:", parsedCart)
+        setItems(parsedCart)
+      } catch (error) {
+        console.error("[v0] Error parsing cart:", error)
+      }
     }
+    setIsReady(true)
   }, [])
 
   // Save cart to localStorage whenever it changes
   useEffect(() => {
-    localStorage.setItem("promptdeal-cart", JSON.stringify(items))
+    if (typeof window !== "undefined" && window.localStorage) {
+      console.log("[v0] Saving cart to localStorage:", items)
+      localStorage.setItem("promptdeal-cart", JSON.stringify(items))
+      console.log("[v0] Cart saved. Verification:", localStorage.getItem("promptdeal-cart"))
+    }
   }, [items])
 
   const addItem = (item: CartItem) => {
@@ -59,7 +74,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const itemCount = items.length
 
   return (
-    <CartContext.Provider value={{ items, addItem, removeItem, clearCart, total, itemCount }}>
+    <CartContext.Provider value={{ items, addItem, removeItem, clearCart, total, itemCount, isReady }}>
       {children}
     </CartContext.Provider>
   )

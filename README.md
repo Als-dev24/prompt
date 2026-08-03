@@ -1,6 +1,6 @@
 # PromptDeal - AI Prompt Marketplace
 
-A modern marketplace for premium AI prompts focused on digital marketing. Built with Next.js 16, React 19, and Tailwind CSS. Accepts cryptocurrency payments via Coinbase Commerce.
+A modern marketplace for premium AI prompts focused on digital marketing. Built with Next.js 16, React 19, and Tailwind CSS. Accepts cryptocurrency payments via NOWPayments.
 
 ## Features
 
@@ -8,7 +8,7 @@ A modern marketplace for premium AI prompts focused on digital marketing. Built 
 - Supabase Integration for data storage and authentication
 - Supabase Storage for secure prompt pack delivery
 - Shopping Cart System with localStorage persistence
-- Cryptocurrency Payment Integration (Coinbase Commerce)
+- Cryptocurrency Payment Integration (NOWPayments)
 - Newsletter subscription with email capture
 - Free marketing tools (AI-powered generators)
 - Responsive Design with modern UI/UX
@@ -23,7 +23,7 @@ A modern marketplace for premium AI prompts focused on digital marketing. Built 
 - **Styling**: Tailwind CSS v4, shadcn/ui components
 - **Database**: Supabase (PostgreSQL)
 - **Storage**: Supabase Storage
-- **Payments**: Coinbase Commerce API
+- **Payments**: NOWPayments API
 - **Email**: Resend API
 - **Analytics**: Google Analytics 4
 - **Hosting**: Vercel
@@ -35,7 +35,7 @@ A modern marketplace for premium AI prompts focused on digital marketing. Built 
 - Node.js 18+ installed
 - pnpm (recommended) or npm
 - Supabase account
-- Coinbase Commerce account
+- NOWPayments account
 - Resend account (optional for emails)
 - Google Analytics 4 property (optional for tracking)
 
@@ -61,9 +61,9 @@ NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
 
-# Coinbase Commerce
-COINBASE_COMMERCE_KEY=your_coinbase_api_key
-COINBASE_WEBHOOK_SECRET=your_coinbase_webhook_secret
+# NOWPayments
+NOWPAYMENTS_API_KEY=your_nowpayments_api_key
+NOWPAYMENTS_IPN_SECRET=your_nowpayments_ipn_secret
 
 # Email (optional)
 RESEND_API_KEY=your_resend_api_key
@@ -135,8 +135,8 @@ Add these in Vercel Dashboard (Settings → Environment Variables):
 - `NEXT_PUBLIC_SUPABASE_URL` - Your Supabase project URL
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY` - Your Supabase anon key
 - `SUPABASE_SERVICE_ROLE_KEY` - Your Supabase service role key
-- `COINBASE_COMMERCE_KEY` - Your Coinbase Commerce API key
-- `COINBASE_WEBHOOK_SECRET` - Your Coinbase webhook secret
+- `NOWPAYMENTS_API_KEY` - Your NOWPayments API key
+- `NOWPAYMENTS_IPN_SECRET` - Your NOWPayments IPN secret
 - `NEXT_PUBLIC_SITE_URL` - Your domain (e.g., https://promptdeal.store)
 
 **Optional:**
@@ -146,11 +146,13 @@ Add these in Vercel Dashboard (Settings → Environment Variables):
 
 ### Webhook Configuration
 
-After deployment, configure the webhook URL in Coinbase Commerce:
+After deployment, configure the webhook URL in NOWPayments:
 
 \`\`\`
 https://promptdeal.store/api/webhook
 \`\`\`
+
+Select payment events: `finished`, `failed`, `expired`
 
 ## SEO Configuration
 
@@ -186,7 +188,7 @@ promptdeal/
 ├── app/
 │   ├── about/          # About Us page
 │   ├── api/            # API routes
-│   │   ├── checkout/   # Coinbase checkout
+│   │   ├── checkout/   # NOWPayments checkout
 │   │   ├── webhook/    # Payment webhooks
 │   │   ├── newsletter/ # Newsletter signup
 │   │   └── download/   # Secure file downloads
@@ -234,7 +236,7 @@ promptdeal/
 ### Payment Flow
 1. User adds packs to cart
 2. Proceeds to checkout
-3. Redirects to Coinbase Commerce
+3. Redirects to NOWPayments
 4. Webhook confirms payment
 5. Generates secure download link (Supabase Storage signed URL)
 6. Email sent with download link
